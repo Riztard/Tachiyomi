@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.WebtoonLayoutManager
 import eu.kanade.tachiyomi.ui.reader.ReaderActivity
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
+import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import eu.kanade.tachiyomi.ui.reader.model.ViewerChapters
 import eu.kanade.tachiyomi.ui.reader.viewer.BaseViewer
@@ -27,7 +28,9 @@ import kotlin.math.min
  * Implementation of a [BaseViewer] to display pages with a [RecyclerView].
  */
 class WebtoonViewer(val activity: ReaderActivity, val isContinuous: Boolean = true) : BaseViewer {
-
+    fun onPageSplitWebtoon(currentPage: ReaderPage, newPage: InsertPage) {
+        adapter.onPageSplitWebtoon(currentPage, newPage, this::class.java)
+    }
     private val scope = MainScope()
 
     /**
@@ -130,6 +133,12 @@ class WebtoonViewer(val activity: ReaderActivity, val isContinuous: Boolean = tr
                 }
             }
             false
+        }
+
+        config.pageSplitWebtoonChangedListener = { enabled ->
+            if (!enabled) {
+                cleanupPageSplit()
+            }
         }
 
         config.imagePropertyChangedListener = {
@@ -324,5 +333,9 @@ class WebtoonViewer(val activity: ReaderActivity, val isContinuous: Boolean = tr
             max(0, position - 3),
             min(position + 3, adapter.itemCount - 1)
         )
+    }
+
+    private fun cleanupPageSplit() {
+        adapter.cleanupPageSplit()
     }
 }
