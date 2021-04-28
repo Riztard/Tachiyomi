@@ -284,7 +284,7 @@ class WebtoonPageHolder(
     }
 
     private fun process(imageStream: InputStream): InputStream {
-        if (!viewer.config.dualPageSplit) {
+        if (!viewer.config.dualPageSplit || viewer.isContinuous) {
             return imageStream
         }
 
