@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/card"
         android:layout_width="wrap_content"
-        android:layout_height="220dp"
+        android:layout_height="200dp"
         android:background="@drawable/rounded_rectangle"
         app:layout_constraintDimensionRatio="0.75"
         app:layout_constraintEnd_toEndOf="parent"

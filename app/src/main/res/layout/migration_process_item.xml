@@ -8,7 +8,7 @@
     <include
         android:id="@+id/migration_manga_card_from"
         layout="@layout/migration_manga_card"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -35,7 +35,7 @@
     <include
         android:id="@+id/migration_manga_card_to"
         layout="@layout/migration_manga_card"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/migration_menu"
@@ -45,7 +45,7 @@
 
     <ImageView
         android:id="@+id/migration_menu"
-        android:layout_width="48dp"
+        android:layout_width="38dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_cover"
         android:paddingTop="30dp"
@@ -62,7 +62,7 @@
 
     <ImageView
         android:id="@+id/skip_manga"
-        android:layout_width="48dp"
+        android:layout_width="38dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/migration_menu"
         app:layout_constraintEnd_toEndOf="@+id/migration_menu"
