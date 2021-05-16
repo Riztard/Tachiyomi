@@ -85,9 +85,9 @@ class MigrationListController(bundle: Bundle? = null) :
     private val throttleManager = EHentaiThrottleManager()
 
     override fun getTitle(): String {
-        return resources?.getString(R.string.migration) + " (${adapter?.items?.count {
+        return "(${adapter?.items?.count {
             it.manga.migrationStatus != MigrationStatus.RUNNING
-        }}/${adapter?.itemCount ?: 0})"
+        }}/${adapter?.itemCount ?: 0}) " + resources?.getString(R.string.migration)
     }
 
     override fun createBinding(inflater: LayoutInflater) = MigrationListControllerBinding.inflate(inflater)
