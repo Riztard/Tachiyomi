@@ -310,6 +310,7 @@ object EXHMigrations {
                         LibrarySort.DATE_ADDED -> SortModeSetting.DATE_ADDED
                         LibrarySort.DRAG_AND_DROP -> SortModeSetting.DRAG_AND_DROP
                         LibrarySort.TAG_LIST -> SortModeSetting.TAG_LIST
+                        LibrarySort.RANDOM -> SortModeSetting.RANDOM
                         else -> SortModeSetting.ALPHABETICAL
                     }
 

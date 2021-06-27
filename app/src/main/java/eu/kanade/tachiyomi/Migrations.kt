@@ -210,6 +210,7 @@ object Migrations {
                     LibrarySort.LATEST_CHAPTER -> SortModeSetting.LATEST_CHAPTER
                     LibrarySort.CHAPTER_FETCH_DATE -> SortModeSetting.DATE_FETCHED
                     LibrarySort.DATE_ADDED -> SortModeSetting.DATE_ADDED
+                    LibrarySort.RANDOM -> SortModeSetting.RANDOM
                     else -> SortModeSetting.ALPHABETICAL
                 }
 

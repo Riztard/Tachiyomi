@@ -204,6 +204,7 @@ class LibrarySettingsSheet(
             private val latestChapter = Item.MultiSort(R.string.action_sort_latest_chapter, this)
             private val chapterFetchDate = Item.MultiSort(R.string.action_sort_chapter_fetch_date, this)
             private val dateAdded = Item.MultiSort(R.string.action_sort_date_added, this)
+            private val random = Item.MultiSort(R.string.action_sort_random, this)
 
             // SY -->
             private val dragAndDrop = Item.MultiSort(R.string.action_sort_drag_and_drop, this)
@@ -213,7 +214,7 @@ class LibrarySettingsSheet(
             override val header = null
 
             override val items =
-                listOf(alphabetically, lastRead, lastChecked, unread, total, latestChapter, chapterFetchDate, dateAdded /* SY --> */, dragAndDrop) + if (preferences.sortTagsForLibrary().get().isNotEmpty()) listOf(tagList) else emptyList() /* SY <-- */
+                listOf(alphabetically, lastRead, lastChecked, unread, total, latestChapter, chapterFetchDate, dateAdded /* SY --> */, dragAndDrop, random) + if (preferences.sortTagsForLibrary().get().isNotEmpty()) listOf(tagList) else emptyList() /* SY <-- */
             override val footer = null
 
             override fun initModels() {
@@ -240,6 +241,8 @@ class LibrarySettingsSheet(
                     if (sorting == SortModeSetting.DATE_FETCHED) order else Item.MultiSort.SORT_NONE
                 dateAdded.state =
                     if (sorting == SortModeSetting.DATE_ADDED) order else Item.MultiSort.SORT_NONE
+                random.state =
+                    if (sorting == SortModeSetting.RANDOM) order else Item.MultiSort.SORT_NONE
                 // SY -->
                 dragAndDrop.state =
                     if (sorting == SortModeSetting.DRAG_AND_DROP) order else Item.MultiSort.SORT_NONE
@@ -314,6 +317,7 @@ class LibrarySettingsSheet(
                     dateAdded -> SortModeSetting.DATE_ADDED
                     // SY -->
                     dragAndDrop -> SortModeSetting.DRAG_AND_DROP
+                    random -> SortModeSetting.RANDOM
                     tagList -> SortModeSetting.TAG_LIST
                     // SY <--
                     else -> throw NotImplementedError("Unknown display mode")

@@ -426,6 +426,7 @@ class LibraryPresenter(
                     manga1chapterFetchDate.compareTo(manga2chapterFetchDate)
                 }
                 SortModeSetting.DATE_ADDED -> i2.manga.date_added.compareTo(i1.manga.date_added)
+                SortModeSetting.RANDOM -> listOf(-1, 1).random()
                 // SY -->
                 SortModeSetting.DRAG_AND_DROP -> {
                     0

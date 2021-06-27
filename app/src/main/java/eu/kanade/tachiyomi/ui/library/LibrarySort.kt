@@ -18,6 +18,8 @@ object LibrarySort {
 
     // SY <--
 
+    const val RANDOM = 11
+
     @Deprecated("Removed in favor of searching by source")
     const val SOURCE = 5
 }

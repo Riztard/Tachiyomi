@@ -13,7 +13,8 @@ enum class SortModeSetting(val flag: Int) {
     DATE_FETCHED(0b00011000),
     DATE_ADDED(0b00011100),
     DRAG_AND_DROP(0b00100000),
-    TAG_LIST(0b00100100);
+    TAG_LIST(0b00100100),
+    RANDOM(0b00101000);
 
     companion object {
         // Mask supports for more sorting flags if necessary
