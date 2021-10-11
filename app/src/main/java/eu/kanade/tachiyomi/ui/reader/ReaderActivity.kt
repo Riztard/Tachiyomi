@@ -594,6 +594,23 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
             }
         }
 
+        // Data Saver
+        with(binding.actionDataSaver) {
+            setTooltip(R.string.data_saver)
+
+            setOnClickListener {
+                preferences.dataSaver().toggle()
+
+                menuToggleToast?.cancel()
+                menuToggleToast = toast(
+                    if (preferences.dataSaver().get()) {
+                        R.string.on
+                    } else {
+                        R.string.off
+                    }
+                )
+            }
+        }
         // Reading mode
         with(binding.actionReadingMode) {
             setTooltip(R.string.viewer)
@@ -919,6 +936,8 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
                 ReaderBottomButton.ViewChapters.isIn(enabledButtons)
             actionCustomFilter.isVisible =
                 ReaderBottomButton.CustomFilter.isIn(enabledButtons)
+            actionDataSaver.isVisible =
+                ReaderBottomButton.DataSaver.isIn(enabledButtons)
             shiftPageButton.isVisible = (viewer as? PagerViewer)?.config?.doublePages ?: false
         }
     }
