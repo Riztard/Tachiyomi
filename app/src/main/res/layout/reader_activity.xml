@@ -449,11 +449,25 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/pref_rotation_type"
                     android:padding="@dimen/screen_edge_margin"
-                    app:layout_constraintEnd_toStartOf="@id/double_page"
+                    app:layout_constraintEnd_toStartOf="@id/action_data_saver"
                     app:layout_constraintStart_toEndOf="@+id/action_crop_borders"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:srcCompat="@drawable/ic_screen_rotation_24dp"
+                    app:tint="?attr/colorOnSurface" />
+
+                <ImageButton
+                    android:id="@+id/action_data_saver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/pref_rotation_type"
+                    android:padding="@dimen/screen_edge_margin"
+                    app:layout_constraintEnd_toStartOf="@id/double_page"
+                    app:layout_constraintStart_toEndOf="@+id/action_rotation"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:srcCompat="@drawable/ic_data_saver_24dp"
                     app:tint="?attr/colorOnSurface" />
 
                 <ImageButton
@@ -464,7 +478,7 @@
                     android:contentDescription="@string/page_layout"
                     android:padding="@dimen/screen_edge_margin"
                     app:layout_constraintEnd_toStartOf="@id/shift_page_button"
-                    app:layout_constraintStart_toEndOf="@+id/action_rotation"
+                    app:layout_constraintStart_toEndOf="@+id/action_data_saver"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:srcCompat="@drawable/ic_book_open_variant_24dp"
