@@ -81,6 +81,13 @@ class MoreController :
                 .launchIn(viewScope)
         }
 
+        switchPreference {
+            key = Keys.dataSaver
+            titleRes = R.string.data_saver
+            iconRes = R.drawable.ic_data_saver_24dp
+            iconTint = tintColor
+        }
+
         preferenceCategory {
             if (!preferences.showNavUpdates().get()) {
                 preference {
