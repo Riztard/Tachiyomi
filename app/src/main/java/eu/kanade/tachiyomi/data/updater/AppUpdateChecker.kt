@@ -71,9 +71,9 @@ class AppUpdateChecker {
 val GITHUB_REPO: String by lazy {
     // Sy -->
     if (syDebugVersion != "0") {
-        "jobobby04/TachiyomiSYPreview"
+        "" // "jobobby04/TachiyomiSYPreview"
     } else {
-        "jobobby04/tachiyomiSY"
+        "" // ""jobobby04/tachiyomiSY"
     }
     // SY <--
 }
