@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="3"
         android:padding="8dp"
         android:shadowColor="@color/md_black_1000"
         android:shadowDx="0"
