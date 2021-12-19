@@ -6,9 +6,15 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_selector_background"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingVertical="10dp"
+    android:paddingVertical="0dp"
     android:paddingStart="16dp"
-    android:paddingEnd="5dp">
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#333333"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/bookmark_icon"
@@ -59,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="4dp"
+        android:paddingEnd="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
