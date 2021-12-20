@@ -571,6 +571,30 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
 
     // EXH -->
     fun initBottomShortcuts() {
+        // Custom Color Filter
+        with(binding.actionCustomFilter) {
+            setTooltip(R.string.pref_custom_color_filter)
+
+            setOnClickListener {
+                preferences.colorFilter().toggle()
+                preferences.customBrightness().toggle()
+
+                menuToggleToast?.cancel()
+                menuToggleToast = toast(
+                    if (preferences.colorFilter().get()) {
+                        eu.kanade.tachiyomi.R.string.on
+                    } else {
+                        eu.kanade.tachiyomi.R.string.off
+                    }
+                )
+            }
+
+            setOnLongClickListener {
+                ReaderSettingsSheet(this@ReaderActivity, showColorFilterSettings = true).show()
+                true
+            }
+        }
+
         // Reading mode
         with(binding.actionReadingMode) {
             setTooltip(R.string.viewer)
@@ -894,6 +918,8 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
                 ReaderBottomButton.WebView.isIn(enabledButtons)
             actionChapterList.isVisible =
                 ReaderBottomButton.ViewChapters.isIn(enabledButtons)
+            actionCustomFilter.isVisible =
+                ReaderBottomButton.CustomFilter.isIn(enabledButtons)
             shiftPageButton.isVisible = (viewer as? PagerViewer)?.config?.doublePages ?: false
         }
     }
