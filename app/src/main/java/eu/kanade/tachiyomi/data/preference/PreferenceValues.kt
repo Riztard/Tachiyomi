@@ -56,6 +56,7 @@ object PreferenceValues {
     }
 
     enum class ReaderHideThreshold(val threshold: Int) {
+        MAXIMUM(0),
         HIGHEST(5),
         HIGH(13),
         LOW(31),
