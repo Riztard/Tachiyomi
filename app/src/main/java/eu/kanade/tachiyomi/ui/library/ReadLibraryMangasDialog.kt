@@ -23,7 +23,6 @@ class ReadLibraryMangasDialog<T>(bundle: Bundle? = null) :
     override fun onCreateDialog(savedViewState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(activity!!)
             .setTitle(if (read) R.string.action_mark_as_read else R.string.action_mark_as_unread)
-            .setView(view)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 (targetController as? Listener)?.markReadStatus(mangas, read)
             }
