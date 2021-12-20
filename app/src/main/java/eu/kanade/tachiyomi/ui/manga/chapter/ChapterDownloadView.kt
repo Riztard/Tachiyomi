@@ -38,9 +38,9 @@ class ChapterDownloadView @JvmOverloads constructor(context: Context, attrs: Att
         binding.downloadIcon.isVisible = state == Download.State.NOT_DOWNLOADED ||
             state == Download.State.DOWNLOADING || state == Download.State.QUEUE
         binding.downloadIcon.imageTintList = if (state == Download.State.DOWNLOADING && progress > 0) {
-            ColorStateList.valueOf(context.getThemeColor(android.R.attr.colorBackground))
+            ColorStateList.valueOf(context.getThemeColor(android.R.attr.colorAccent))
         } else {
-            ColorStateList.valueOf(context.getThemeColor(android.R.attr.textColorHint))
+            ColorStateList.valueOf(context.getThemeColor(android.R.attr.colorAccent))
         }
 
         binding.downloadProgress.apply {
@@ -50,7 +50,7 @@ class ChapterDownloadView @JvmOverloads constructor(context: Context, attrs: Att
                 hideAnimationBehavior = BaseProgressIndicator.HIDE_NONE
                 if (state == Download.State.NOT_DOWNLOADED || state == Download.State.QUEUE) {
                     trackThickness = 2.dpToPx
-                    setIndicatorColor(context.getThemeColor(android.R.attr.textColorHint))
+                    setIndicatorColor(context.getThemeColor(android.R.attr.colorAccent))
                     if (state == Download.State.NOT_DOWNLOADED) {
                         if (isIndeterminate) {
                             hide()
