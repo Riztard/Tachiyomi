@@ -355,7 +355,7 @@ class LibraryUpdateService(
 
         mangaToUpdate = listToUpdate
             .distinctBy { it.id }
-            .sortedBy { it.title }
+            .shuffled()
 
         // Warn when excessively checking a single source
         val maxUpdatesFromSource = mangaToUpdate
