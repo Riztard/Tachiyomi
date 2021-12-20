@@ -314,6 +314,7 @@ class SettingsReaderController : SettingsController() {
                 key = Keys.readerHideThreshold
                 titleRes = R.string.pref_hide_threshold
                 entriesRes = arrayOf(
+                    R.string.pref_maximum,
                     R.string.pref_highest,
                     R.string.pref_high,
                     R.string.pref_low,
