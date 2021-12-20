@@ -118,7 +118,6 @@ class BrowseController :
         private val tabTitles = (
             if (preferences.feedTabInFront().get()) {
                 listOf(
-                    R.string.feed,
                     R.string.label_sources,
                     R.string.label_extensions,
                     R.string.label_migration,
@@ -127,9 +126,9 @@ class BrowseController :
             } else {
                 listOf(
                     R.string.label_sources,
-                    R.string.feed,
                     R.string.label_extensions,
                     R.string.label_migration,
+                    R.string.feed,
                 )
             }
             )
@@ -144,8 +143,8 @@ class BrowseController :
             if (!router.hasRootController()) {
                 val controller: Controller = when (position) {
                     // SY -->
-                    SOURCES_CONTROLLER -> if (preferences.feedTabInFront().get()) FeedController() else SourcesController()
-                    FEED_CONTROLLER -> if (!preferences.feedTabInFront().get()) FeedController() else SourcesController()
+                    SOURCES_CONTROLLER -> SourceController()
+                    FEED_CONTROLLER -> FeedController()
                     // SY <--
                     EXTENSIONS_CONTROLLER -> ExtensionsController()
                     MIGRATION_CONTROLLER -> MigrationSourcesController()
@@ -166,9 +165,9 @@ class BrowseController :
         const val SOURCES_CONTROLLER = 0
 
         // SY -->
-        const val FEED_CONTROLLER = 1
-        const val EXTENSIONS_CONTROLLER = 2
-        const val MIGRATION_CONTROLLER = 3
+        const val EXTENSIONS_CONTROLLER = 1
+        const val MIGRATION_CONTROLLER = 2
+        const val FEED_CONTROLLER = 3
         // SY <--
     }
 }
