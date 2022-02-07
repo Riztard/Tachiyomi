@@ -455,9 +455,9 @@ class MangaController :
         val adapter = chaptersAdapter ?: return
         val fab = actionFab ?: return
         if (adapter.items.any { it.read }) {
-            fab.text = context.getString(R.string.action_resume)
+            fab.text = context.getString(R.string.action_resume) + " Ch " + presenter.getNextUnreadChapter()?.chapter_number.toString().replace(".0", "")
         } else {
-            fab.text = context.getString(R.string.action_start)
+            fab.text = context.getString(R.string.action_start) + " Ch " + presenter.getNextUnreadChapter()?.chapter_number.toString().replace(".0", "")
         }
         if (adapter.items.any { !it.read }) {
             fab.show()
