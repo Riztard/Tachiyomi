@@ -122,16 +122,22 @@
                 android:textIsSelectable="false"
                 tools:text="Status" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manga_source_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <ImageView
+                android:id="@+id/manga_source_icon"
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="4dp"
-                android:text="•"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textIsSelectable="false"
-                tools:ignore="HardcodedText" />
+                app:srcCompat="@drawable/ic_extension_24dp"
+                app:tint="?android:attr/textColorSecondary"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/manga_source"
