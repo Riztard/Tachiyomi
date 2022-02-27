@@ -401,7 +401,7 @@
                 tools:ignore="KeyboardInaccessibleWidget">
 
                 <ImageButton
-                    android:id="@+id/action_chapter_list"
+                    android:id="@+id/action_reading_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -411,7 +411,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    app:srcCompat="@drawable/ic_format_list_numbered_24dp"
+                    app:srcCompat="@drawable/ic_reader_default_24dp"
                     app:tint="?attr/colorOnSurface" />
 
                 <ImageButton
@@ -421,15 +421,15 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/custom_filter"
                     android:padding="@dimen/screen_edge_margin"
-                    app:layout_constraintEnd_toStartOf="@id/action_reading_mode"
-                    app:layout_constraintStart_toEndOf="@+id/action_chapter_list"
+                    app:layout_constraintEnd_toStartOf="@id/action_chapter_list"
+                    app:layout_constraintStart_toEndOf="@+id/action_reading_mode"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:srcCompat="@drawable/ic_public_24dp"
                     app:tint="?attr/colorOnSurface" />
 
                 <ImageButton
-                    android:id="@+id/action_reading_mode"
+                    android:id="@+id/action_chapter_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -439,7 +439,7 @@
                     app:layout_constraintStart_toEndOf="@+id/action_web_view"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
-                    app:srcCompat="@drawable/ic_reader_default_24dp"
+                    app:srcCompat="@drawable/ic_format_list_numbered_24dp"
                     app:tint="?attr/colorOnSurface" />
 
                 <ImageButton
@@ -450,7 +450,7 @@
                     android:contentDescription="@string/pref_crop_borders"
                     android:padding="@dimen/screen_edge_margin"
                     app:layout_constraintEnd_toStartOf="@id/action_rotation"
-                    app:layout_constraintStart_toEndOf="@+id/action_reading_mode"
+                    app:layout_constraintStart_toEndOf="@+id/action_chapter_list"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:srcCompat="@drawable/ic_crop_24dp"
