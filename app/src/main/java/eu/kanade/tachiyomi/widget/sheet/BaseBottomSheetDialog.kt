@@ -34,7 +34,7 @@ abstract class BaseBottomSheetDialog(context: Context) : BottomSheetDialog(conte
         context.displayCompat?.let {
             val metrics = DisplayMetrics()
             it.getRealMetrics(metrics)
-            behavior.peekHeight = metrics.heightPixels / 2
+            behavior.peekHeight = metrics.heightPixels / 3 + metrics.heightPixels / 5 + metrics.heightPixels / 5
         }
 
         // Set navbar color to transparent for edge-to-edge bottom sheet if we can use light navigation bar
