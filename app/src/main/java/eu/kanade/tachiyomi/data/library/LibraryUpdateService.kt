@@ -398,7 +398,7 @@ class LibraryUpdateService(
                                             MANGA_NON_COMPLETED in restrictions && mangaWithNotif.status == SManga.COMPLETED ->
                                                 skippedUpdates.add(mangaWithNotif to getString(R.string.skipped_reason_completed))
 
-                                            MANGA_HAS_UNREAD in restrictions && mangaWithNotif.unreadCount != 0 ->
+                                            MANGA_HAS_UNREAD in restrictions && mangaWithNotif.unreadCount > 1 ->
                                                 skippedUpdates.add(mangaWithNotif to getString(R.string.skipped_reason_not_caught_up))
 
                                             MANGA_NON_READ in restrictions && mangaWithNotif.totalChapters > 0 && !mangaWithNotif.hasStarted ->
