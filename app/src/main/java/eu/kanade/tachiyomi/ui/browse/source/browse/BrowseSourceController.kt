@@ -205,7 +205,7 @@ open class BrowseSourceController(bundle: Bundle) :
             binding.catalogueView.removeView(oldRecycler)
         }
 
-        val recycler = if (preferences.sourceDisplayMode().get() == DisplayModeSetting.LIST || preferences.sourceDisplayMode().get() == DisplayModeSetting.LIST_MEDIUM) {
+        val recycler = if (preferences.sourceDisplayMode().get() in listOf(DisplayModeSetting.LIST, DisplayModeSetting.LIST_MEDIUM)) {
             RecyclerView(view.context).apply {
                 id = R.id.recycler
                 layoutManager = LinearLayoutManager(context)
