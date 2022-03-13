@@ -205,7 +205,7 @@ open class BrowseSourceController(bundle: Bundle) :
             binding.catalogueView.removeView(oldRecycler)
         }
 
-        val recycler = if (preferences.sourceDisplayMode().get() == DisplayModeSetting.LIST) {
+        val recycler = if (preferences.sourceDisplayMode().get() == DisplayModeSetting.LIST || preferences.sourceDisplayMode().get() == DisplayModeSetting.LIST_MEDIUM) {
             RecyclerView(view.context).apply {
                 id = R.id.recycler
                 layoutManager = LinearLayoutManager(context)
@@ -274,6 +274,7 @@ open class BrowseSourceController(bundle: Bundle) :
 
         val displayItem = when (preferences.sourceDisplayMode().get()) {
             DisplayModeSetting.LIST -> R.id.action_list
+            DisplayModeSetting.LIST_MEDIUM -> R.id.action_list_medium
             DisplayModeSetting.COMFORTABLE_GRID -> R.id.action_comfortable_grid
             else -> R.id.action_compact_grid
         }
@@ -300,6 +301,7 @@ open class BrowseSourceController(bundle: Bundle) :
             R.id.action_compact_grid -> setDisplayMode(DisplayModeSetting.COMPACT_GRID)
             R.id.action_comfortable_grid -> setDisplayMode(DisplayModeSetting.COMFORTABLE_GRID)
             R.id.action_list -> setDisplayMode(DisplayModeSetting.LIST)
+            R.id.action_list_medium -> setDisplayMode(DisplayModeSetting.LIST_MEDIUM)
             R.id.action_open_in_web_view -> openInWebView()
             R.id.action_local_source_help -> openLocalSourceHelpGuide()
         }

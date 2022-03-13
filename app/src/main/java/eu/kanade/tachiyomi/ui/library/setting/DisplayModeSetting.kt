@@ -4,6 +4,7 @@ enum class DisplayModeSetting(val flag: Int) {
     COMPACT_GRID(0b00000000),
     COMFORTABLE_GRID(0b00000001),
     LIST(0b00000010),
+    LIST_MEDIUM(0b00000100),
     COVER_ONLY_GRID(0b00000011);
 
     companion object {

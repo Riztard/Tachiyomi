@@ -320,9 +320,10 @@ class LibrarySettingsSheet(
             private val comfortableGrid = Item.Radio(R.string.action_display_comfortable_grid, this)
             private val coverOnlyGrid = Item.Radio(R.string.action_display_cover_only_grid, this)
             private val list = Item.Radio(R.string.action_display_list, this)
+            private val listMedium = Item.Radio(R.string.action_display_list_medium, this)
 
             override val header = Item.Header(R.string.action_display_mode)
-            override val items = listOf(compactGrid, comfortableGrid, coverOnlyGrid, list)
+            override val items = listOf(compactGrid, comfortableGrid, coverOnlyGrid, list, listMedium)
             override val footer = null
 
             override fun initModels() {
@@ -348,6 +349,7 @@ class LibrarySettingsSheet(
                 comfortableGrid.checked = mode == DisplayModeSetting.COMFORTABLE_GRID
                 coverOnlyGrid.checked = mode == DisplayModeSetting.COVER_ONLY_GRID
                 list.checked = mode == DisplayModeSetting.LIST
+                listMedium.checked = mode == DisplayModeSetting.LIST_MEDIUM
             }
 
             private fun setDisplayModePreference(item: Item) {
@@ -356,6 +358,7 @@ class LibrarySettingsSheet(
                     comfortableGrid -> DisplayModeSetting.COMFORTABLE_GRID
                     coverOnlyGrid -> DisplayModeSetting.COVER_ONLY_GRID
                     list -> DisplayModeSetting.LIST
+                    listMedium -> DisplayModeSetting.LIST_MEDIUM
                     else -> throw NotImplementedError("Unknown display mode")
                 }
 

@@ -44,6 +44,7 @@ class LibraryItem(
             DisplayModeSetting.COMPACT_GRID, DisplayModeSetting.COVER_ONLY_GRID -> R.layout.source_compact_grid_item
             DisplayModeSetting.COMFORTABLE_GRID -> R.layout.source_comfortable_grid_item
             DisplayModeSetting.LIST -> R.layout.source_list_item
+            DisplayModeSetting.LIST_MEDIUM -> R.layout.source_list_medium_item
         }
     }
 
@@ -58,7 +59,7 @@ class LibraryItem(
             DisplayModeSetting.COMFORTABLE_GRID -> {
                 LibraryComfortableGridHolder(SourceComfortableGridItemBinding.bind(view), adapter)
             }
-            DisplayModeSetting.LIST -> {
+            DisplayModeSetting.LIST, DisplayModeSetting.LIST_MEDIUM -> {
                 LibraryListHolder(view, adapter)
             }
         }

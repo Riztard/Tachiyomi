@@ -25,6 +25,9 @@
                 <item
                     android:id="@+id/action_list"
                     android:title="@string/action_display_list" />
+                <item
+                    android:id="@+id/action_list_medium"
+                    android:title="@string/action_display_list_medium" />
             </group>
         </menu>
     </item>
