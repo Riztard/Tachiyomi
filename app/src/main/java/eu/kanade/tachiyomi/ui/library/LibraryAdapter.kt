@@ -154,13 +154,13 @@ class LibraryAdapter(
     override fun getViewType(position: Int): Int {
         val category = categories.getOrNull(position)
         return if (isPerCategory && category?.id != 0) {
-            if (DisplayModeSetting.fromFlag(category?.displayMode) == DisplayModeSetting.LIST || DisplayModeSetting.fromFlag(category?.displayMode) == DisplayModeSetting.LIST_MEDIUM) {
+            if (DisplayModeSetting.fromFlag(category?.displayMode) in listOf(DisplayModeSetting.LIST, DisplayModeSetting.LIST_MEDIUM)) {
                 LIST_DISPLAY_MODE
             } else {
                 GRID_DISPLAY_MODE
             }
         } else {
-            if (currentDisplayMode == DisplayModeSetting.LIST || currentDisplayMode == DisplayModeSetting.LIST_MEDIUM) {
+            if (currentDisplayMode in listOf(DisplayModeSetting.LIST, DisplayModeSetting.LIST_MEDIUM)) {
                 LIST_DISPLAY_MODE
             } else {
                 GRID_DISPLAY_MODE
