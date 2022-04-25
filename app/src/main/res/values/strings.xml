@@ -619,6 +619,7 @@
     <string name="manga_download">Download</string>
     <string name="custom_download">Download custom amount</string>
     <string name="download_1">Next chapter</string>
+    <string name="download_3">Next 3 chapters</string>
     <string name="download_5">Next 5 chapters</string>
     <string name="download_10">Next 10 chapters</string>
     <string name="download_custom">Custom</string>

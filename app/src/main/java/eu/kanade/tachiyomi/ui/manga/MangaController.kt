@@ -501,7 +501,7 @@ class MangaController :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> shareManga()
-            R.id.download_next, R.id.download_next_5, R.id.download_next_10,
+            R.id.download_next, R.id.download_next_3, R.id.download_next_5, R.id.download_next_10,
             R.id.download_custom, R.id.download_unread, R.id.download_all,
             -> downloadChapters(item.itemId)
 
@@ -1430,6 +1430,7 @@ class MangaController :
     private fun downloadChapters(choice: Int) {
         val chaptersToDownload = when (choice) {
             R.id.download_next -> presenter.getUnreadChaptersSorted().take(1)
+            R.id.download_next_3 -> presenter.getUnreadChaptersSorted().take(3)
             R.id.download_next_5 -> presenter.getUnreadChaptersSorted().take(5)
             R.id.download_next_10 -> presenter.getUnreadChaptersSorted().take(10)
             R.id.download_custom -> {
