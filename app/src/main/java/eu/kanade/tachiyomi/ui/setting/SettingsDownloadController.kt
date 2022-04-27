@@ -80,6 +80,16 @@ class SettingsDownloadController : SettingsController() {
         }
 
         preferenceCategory {
+            titleRes = R.string.pref_download_steady_chapters
+
+            switchPreference {
+                isSingleLineTitle = false
+                key = Keys.steadyChapterDownload
+                titleRes = R.string.pref_download_steady_chapters_description
+                defaultValue = false
+            }
+        }
+        preferenceCategory {
             titleRes = R.string.pref_category_delete_chapters
 
             switchPreference {
