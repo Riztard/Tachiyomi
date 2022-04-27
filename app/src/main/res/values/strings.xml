@@ -9,6 +9,9 @@
     <string name="chapters">Chapters</string>
     <string name="track">Tracking</string>
     <string name="history">History</string>
+    <string name="pref_download_steady_chapters">Steady Downloads</string>
+    <string name="pref_download_steady_chapters_description">Always have the next chapter downloaded while reading</string>
+    <string name="transition_next_downloaded"> [Downloaded]</string>
 
     <!-- Activities and fragments labels (toolbar title) -->
     <string name="label_more">More</string>

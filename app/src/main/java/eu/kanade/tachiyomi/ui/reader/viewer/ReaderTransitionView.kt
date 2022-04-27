@@ -9,6 +9,7 @@ import androidx.core.text.buildSpannedString
 import androidx.core.view.isVisible
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.databinding.ReaderTransitionViewBinding
+import eu.kanade.tachiyomi.ui.reader.loader.DownloadPageLoader
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 
 class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -59,6 +60,13 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
      */
     private fun bindNextChapterTransition(transition: ChapterTransition) {
         val nextChapter = transition.to
+        var isChapterDownloaded = false
+
+        when (nextChapter?.pageLoader) {
+            is DownloadPageLoader -> {
+                isChapterDownloaded = (nextChapter.pageLoader as DownloadPageLoader).isChapterDownloaded(nextChapter.chapter)
+            }
+        }
 
         val hasNextChapter = nextChapter != null
         binding.lowerText.isVisible = hasNextChapter
@@ -70,7 +78,8 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
             }
             binding.lowerText.text = buildSpannedString {
                 bold { append(context.getString(R.string.transition_next)) }
-                append("\n${nextChapter!!.chapter.name}")
+                if (isChapterDownloaded) append("\n${nextChapter!!.chapter.name} " + context.getString(R.string.transition_next_downloaded))
+                else append("\n${nextChapter!!.chapter.name}")
             }
         } else {
             binding.upperText.textAlignment = TEXT_ALIGNMENT_CENTER
