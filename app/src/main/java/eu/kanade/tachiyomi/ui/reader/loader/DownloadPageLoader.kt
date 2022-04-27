@@ -3,6 +3,7 @@ package eu.kanade.tachiyomi.ui.reader.loader
 import android.app.Application
 import android.net.Uri
 import com.hippo.unifile.UniFile
+import eu.kanade.tachiyomi.data.database.models.Chapter
 import eu.kanade.tachiyomi.data.database.models.Manga
 import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.source.Source
@@ -36,6 +37,13 @@ class DownloadPageLoader(
         } else {
             getPagesFromDirectory()
         }
+    }
+
+    /**
+     * confirm that the [chapter] is downloaded
+     */
+    fun isChapterDownloaded(chapter: Chapter): Boolean {
+        return downloadManager.isChapterDownloaded(chapter, manga)
     }
 
     private fun getPagesFromArchive(chapterPath: UniFile): Observable<List<ReaderPage>> {

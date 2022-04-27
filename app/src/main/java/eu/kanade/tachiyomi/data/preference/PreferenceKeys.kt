@@ -17,6 +17,8 @@ object PreferenceKeys {
 
     const val downloadOnlyOverWifi = "pref_download_only_over_wifi_key"
 
+    const val steadyChapterDownload = "steady_chapter_download"
+
     const val folderPerManga = "create_folder_per_manga"
 
     const val removeAfterReadSlots = "remove_after_read_slots"

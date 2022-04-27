@@ -81,6 +81,8 @@ class WebtoonViewer(val activity: ReaderActivity, val isContinuous: Boolean = tr
             .get()
             .threshold
 
+    private val preferences: PreferencesHelper = Injekt.get()
+
     init {
         recycler.isVisible = false // Don't let the recycler layout yet
         recycler.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
@@ -208,8 +210,11 @@ class WebtoonViewer(val activity: ReaderActivity, val isContinuous: Boolean = tr
 
         // Preload next chapter once we're within the last 5 pages of the current chapter
         val inPreloadRange = pages.size - page.number < 5
-        if (inPreloadRange && allowPreload && page.chapter == adapter.currentChapter) {
-            logcat { "Request preload next chapter because we're at page ${page.number} of ${pages.size}" }
+        // if true, preload will be requested ASAP
+        val steadyChapterDownload = preferences.steadyChapterDownload()
+
+        if ((inPreloadRange || steadyChapterDownload) && allowPreload && page.chapter == adapter.currentChapter) {
+            logcat { "Request preload next chapter because we're at page ${page.number} of ${pages.size} | steadyDownloads: $steadyChapterDownload" }
             val nextItem = adapter.items.getOrNull(adapter.items.size - 1)
             val transitionChapter = (nextItem as? ChapterTransition.Next)?.to ?: (nextItem as?ReaderPage)?.chapter
             if (transitionChapter != null) {

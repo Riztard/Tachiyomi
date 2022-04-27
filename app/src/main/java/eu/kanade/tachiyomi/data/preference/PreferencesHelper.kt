@@ -211,6 +211,8 @@ class PreferencesHelper(val context: Context) {
 
     fun splitTallImages() = flowPrefs.getBoolean("split_tall_images", false)
 
+    fun steadyChapterDownload() = prefs.getBoolean(Keys.steadyChapterDownload, false)
+
     fun folderPerManga() = prefs.getBoolean(Keys.folderPerManga, false)
 
     fun numberOfBackups() = flowPrefs.getInt("backup_slots", 2)
