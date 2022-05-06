@@ -17,6 +17,7 @@ import eu.kanade.tachiyomi.data.database.models.Manga
 import eu.kanade.tachiyomi.data.database.models.toMangaInfo
 import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.data.download.DownloadService
+import eu.kanade.tachiyomi.data.download.model.Download
 import eu.kanade.tachiyomi.data.library.LibraryUpdateService.Companion.start
 import eu.kanade.tachiyomi.data.notification.Notifications
 import eu.kanade.tachiyomi.data.preference.MANGA_HAS_UNREAD
@@ -35,9 +36,11 @@ import eu.kanade.tachiyomi.source.model.toSChapter
 import eu.kanade.tachiyomi.source.model.toSManga
 import eu.kanade.tachiyomi.source.online.all.MergedSource
 import eu.kanade.tachiyomi.ui.library.LibraryGroup
+import eu.kanade.tachiyomi.ui.manga.chapter.ChapterItem
 import eu.kanade.tachiyomi.ui.manga.track.TrackItem
 import eu.kanade.tachiyomi.util.chapter.syncChaptersWithSource
 import eu.kanade.tachiyomi.util.chapter.syncChaptersWithTrackServiceTwoWay
+import eu.kanade.tachiyomi.util.getChaptersToDownload
 import eu.kanade.tachiyomi.util.lang.withIOContext
 import eu.kanade.tachiyomi.util.prepUpdateCover
 import eu.kanade.tachiyomi.util.shouldDownloadNewChapters
@@ -410,7 +413,16 @@ class LibraryUpdateService(
 
                                                 if (newChapters.isNotEmpty()) {
                                                     if (mangaWithNotif.shouldDownloadNewChapters(db, preferences)) {
-                                                        downloadChapters(mangaWithNotif, newChapters)
+                                                        val chaptersDatabase = db.getChapters(mangaWithNotif).executeAsBlocking()
+                                                            .map { ChapterItem(it, mangaWithNotif) }
+                                                        chaptersDatabase.filter {
+                                                            downloadManager.isChapterDownloaded(it, mangaWithNotif)
+                                                        }.forEach { it.status = Download.State.DOWNLOADED }
+
+                                                        val chaptersToDownload = mangaWithNotif.getChaptersToDownload(
+                                                            newChapters, chaptersDatabase, preferences
+                                                        )
+                                                        downloadChapters(mangaWithNotif, chaptersToDownload)
                                                         hasDownloads.set(true)
                                                     }
 

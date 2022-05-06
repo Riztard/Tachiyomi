@@ -412,7 +412,14 @@
     <string name="fourth_to_last">Fourth to last read chapter</string>
     <string name="fifth_to_last">Fifth to last read chapter</string>
     <string name="pref_category_auto_download">Auto-download</string>
-    <string name="pref_download_new">Download new chapters</string>
+    <string name="pref_download_new">Download new chapters until limit (per title)</string>
+    <plurals name="download_new_chapters_limit">
+        <item quantity="one">%d unread chapter</item>
+        <item quantity="other">%d unread chapters</item>
+    </plurals>
+    <string name="all_new_chapters">All new chapters</string>
+    <string name="pref_download_new_restriction">Automatic download device restrictions</string>
+    <string name="pref_download_new_skip_unread">Skip titles with unread chapter(s)</string>
     <string name="pref_download_new_categories_details">Manga in excluded categories will not be downloaded even if they are also in included categories.</string>
     <string name="save_chapter_as_cbz">Save as CBZ archive</string>
     <string name="split_tall_images">Auto split tall images</string>
