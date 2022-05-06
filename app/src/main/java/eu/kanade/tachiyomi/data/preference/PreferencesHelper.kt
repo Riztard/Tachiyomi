@@ -287,10 +287,14 @@ class PreferencesHelper(val context: Context) {
 
     fun pinnedSources() = flowPrefs.getStringSet("pinned_catalogues", emptySet())
 
-    fun downloadNewChapter() = flowPrefs.getBoolean("download_new", false)
+    fun downloadNewChapters() = flowPrefs.getInt("download_new_chapters", 0)
 
     fun downloadNewChapterCategories() = flowPrefs.getStringSet("download_new_categories", emptySet())
     fun downloadNewChapterCategoriesExclude() = flowPrefs.getStringSet("download_new_categories_exclude", emptySet())
+
+    fun downloadNewDeviceRestriction() = flowPrefs.getStringSet("download_new_update_restriction", setOf(DEVICE_ONLY_ON_WIFI))
+
+    fun downloadNewSkipUnread() = flowPrefs.getBoolean("download_new_skip_unread", false)
 
     fun defaultCategory() = prefs.getInt(Keys.defaultCategory, -1)
 

@@ -14,6 +14,9 @@ import com.hippo.unifile.UniFile
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.database.DatabaseHelper
 import eu.kanade.tachiyomi.data.database.models.Category
+import eu.kanade.tachiyomi.data.preference.DEVICE_BATTERY_NOT_LOW
+import eu.kanade.tachiyomi.data.preference.DEVICE_CHARGING
+import eu.kanade.tachiyomi.data.preference.DEVICE_ONLY_ON_WIFI
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.ui.base.controller.DialogController
 import eu.kanade.tachiyomi.util.preference.bindTo
@@ -141,9 +144,20 @@ class SettingsDownloadController : SettingsController() {
         preferenceCategory {
             titleRes = R.string.pref_category_auto_download
 
-            switchPreference {
-                bindTo(preferences.downloadNewChapter())
+            intListPreference {
+                bindTo(preferences.downloadNewChapters())
                 titleRes = R.string.pref_download_new
+                entries = arrayOf(
+                    context.getString(R.string.disabled),
+                    context.resources.getQuantityString(R.plurals.download_new_chapters_limit, 1, 1),
+                    context.resources.getQuantityString(R.plurals.download_new_chapters_limit, 2, 2),
+                    context.resources.getQuantityString(R.plurals.download_new_chapters_limit, 3, 3),
+                    context.resources.getQuantityString(R.plurals.download_new_chapters_limit, 5, 5),
+                    context.resources.getQuantityString(R.plurals.download_new_chapters_limit, 10, 10),
+                    context.getString(R.string.all_new_chapters),
+                )
+                entryValues = arrayOf("0", "1", "2", "3", "5", "10", "-1")
+                summary = "%s"
             }
             preference {
                 bindTo(preferences.downloadNewChapterCategories())
@@ -152,7 +166,7 @@ class SettingsDownloadController : SettingsController() {
                     DownloadCategoriesDialog().showDialog(router)
                 }
 
-                visibleIf(preferences.downloadNewChapter()) { it }
+                visibleIf(preferences.downloadNewChapters()) { it != 0 }
 
                 fun updateSummary() {
                     val selectedCategories = preferences.downloadNewChapterCategories().get()
@@ -186,6 +200,44 @@ class SettingsDownloadController : SettingsController() {
                 preferences.downloadNewChapterCategoriesExclude().asFlow()
                     .onEach { updateSummary() }
                     .launchIn(viewScope)
+            }
+            multiSelectListPreference {
+                bindTo(preferences.downloadNewDeviceRestriction())
+                titleRes = R.string.pref_download_new_restriction
+                entriesRes = arrayOf(R.string.connected_to_wifi, R.string.charging, R.string.battery_not_low)
+                entryValues = arrayOf(DEVICE_ONLY_ON_WIFI, DEVICE_CHARGING, DEVICE_BATTERY_NOT_LOW)
+
+                visibleIf(preferences.downloadNewChapters()) { it != 0 }
+
+                fun updateSummary() {
+                    val restrictions = preferences.downloadNewDeviceRestriction().get()
+                        .sorted()
+                        .map {
+                            when (it) {
+                                DEVICE_ONLY_ON_WIFI -> context.getString(R.string.connected_to_wifi)
+                                DEVICE_CHARGING -> context.getString(R.string.charging)
+                                DEVICE_BATTERY_NOT_LOW -> context.getString(R.string.battery_not_low)
+                                else -> it
+                            }
+                        }
+                    val restrictionsText = if (restrictions.isEmpty()) {
+                        context.getString(R.string.none)
+                    } else {
+                        restrictions.joinToString()
+                    }
+
+                    summary = context.getString(R.string.restrictions, restrictionsText)
+                }
+
+                preferences.downloadNewDeviceRestriction().asFlow()
+                    .onEach { updateSummary() }
+                    .launchIn(viewScope)
+            }
+            switchPreference {
+                bindTo(preferences.downloadNewSkipUnread())
+                titleRes = R.string.pref_download_new_skip_unread
+
+                visibleIf(preferences.downloadNewChapters()) { it != 0 }
             }
         }
     }
