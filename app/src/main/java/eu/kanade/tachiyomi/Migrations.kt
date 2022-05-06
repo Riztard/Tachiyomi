@@ -279,6 +279,12 @@ object Migrations {
                 }
                 preferences.librarySortingMode().set(newSortingMode)
             }
+            if (oldVersion < 82) {
+                val downloadNew = prefs.getBoolean("download_new", false)
+                if (downloadNew) {
+                    preferences.downloadNewChapters().set(-1)
+                }
+            }
 
             return true
         }

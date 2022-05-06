@@ -1,11 +1,20 @@
 package eu.kanade.tachiyomi.util
 
+import android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY
 import eu.kanade.tachiyomi.data.cache.CoverCache
 import eu.kanade.tachiyomi.data.database.DatabaseHelper
+import eu.kanade.tachiyomi.data.database.models.Chapter
 import eu.kanade.tachiyomi.data.database.models.Manga
+import eu.kanade.tachiyomi.data.preference.DEVICE_BATTERY_NOT_LOW
+import eu.kanade.tachiyomi.data.preference.DEVICE_CHARGING
+import eu.kanade.tachiyomi.data.preference.DEVICE_ONLY_ON_WIFI
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.source.LocalSource
 import eu.kanade.tachiyomi.source.model.SManga
+import eu.kanade.tachiyomi.ui.manga.chapter.ChapterItem
+import eu.kanade.tachiyomi.util.chapter.getChapterSort
+import eu.kanade.tachiyomi.util.system.batteryManager
+import eu.kanade.tachiyomi.util.system.isConnectedToWifi
 import java.util.Date
 
 fun Manga.isLocal() = source == LocalSource.ID
@@ -56,8 +65,15 @@ fun Manga.shouldDownloadNewChapters(db: DatabaseHelper, prefs: PreferencesHelper
     if (!favorite) return false
 
     // Boolean to determine if user wants to automatically download new chapters.
-    val downloadNewChapter = prefs.downloadNewChapter().get()
-    if (!downloadNewChapter) return false
+    val downloadNewChapter = prefs.downloadNewChapters().get()
+    if (downloadNewChapter == 0) return false
+
+    val restrictions = prefs.downloadNewDeviceRestriction().get()
+    if (DEVICE_ONLY_ON_WIFI in restrictions && !prefs.context.isConnectedToWifi()) return false
+    val batteryManager = prefs.context.batteryManager
+    if (DEVICE_CHARGING in restrictions && !batteryManager.isCharging) return false
+    val batteryLevel = batteryManager.getIntProperty(BATTERY_PROPERTY_CAPACITY)
+    if (DEVICE_BATTERY_NOT_LOW in restrictions && batteryLevel <= 15) return false
 
     val includedCategories = prefs.downloadNewChapterCategories().get().map { it.toInt() }
     val excludedCategories = prefs.downloadNewChapterCategoriesExclude().get().map { it.toInt() }
@@ -79,4 +95,28 @@ fun Manga.shouldDownloadNewChapters(db: DatabaseHelper, prefs: PreferencesHelper
 
     // In included category
     return categoriesForManga.any { it in includedCategories }
+}
+
+/**
+ * Filter the chapters to download among the new chapters of a manga
+ */
+fun Manga.getChaptersToDownload(
+    newChapters: List<Chapter>,
+    mangaChapters: List<ChapterItem>,
+    preferences: PreferencesHelper
+): List<Chapter> {
+    val skipWhenUnreadChapters = preferences.downloadNewSkipUnread().get()
+    val downloadNewChaptersLimit = preferences.downloadNewChapters().get()
+
+    val newChaptersIds = newChapters.map { it.id }
+    val unreadChapters = mangaChapters.filter { !it.read && it.id !in newChaptersIds }
+
+    if (skipWhenUnreadChapters && unreadChapters.isNotEmpty()) return emptyList()
+
+    return if (downloadNewChaptersLimit != -1) {
+        val downloadedUnreadChaptersCount = unreadChapters.count { it.isDownloaded }
+
+        newChapters.sortedWith(getChapterSort(this, false))
+            .take((downloadNewChaptersLimit - downloadedUnreadChaptersCount).coerceAtLeast(0))
+    } else newChapters
 }

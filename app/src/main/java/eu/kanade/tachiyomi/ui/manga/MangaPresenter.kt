@@ -36,6 +36,7 @@ import eu.kanade.tachiyomi.util.chapter.ChapterSettingsHelper
 import eu.kanade.tachiyomi.util.chapter.getChapterSort
 import eu.kanade.tachiyomi.util.chapter.syncChaptersWithSource
 import eu.kanade.tachiyomi.util.chapter.syncChaptersWithTrackServiceTwoWay
+import eu.kanade.tachiyomi.util.getChaptersToDownload
 import eu.kanade.tachiyomi.util.isLocal
 import eu.kanade.tachiyomi.util.lang.launchIO
 import eu.kanade.tachiyomi.util.lang.launchUI
@@ -962,7 +963,8 @@ class MangaPresenter(
     private fun downloadNewChapters(chapters: List<Chapter>) {
         if (chapters.isEmpty() || !manga.shouldDownloadNewChapters(db, preferences) || source.isEhBasedSource()) return
 
-        downloadChapters(chapters)
+        val chaptersToDownload = manga.getChaptersToDownload(chapters, allChapters, preferences)
+        downloadChapters(chaptersToDownload)
     }
 
     /**
