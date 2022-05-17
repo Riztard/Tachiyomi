@@ -13,8 +13,6 @@ import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.database.DatabaseHelper
 import eu.kanade.tachiyomi.data.database.models.Category
 import eu.kanade.tachiyomi.data.database.models.Manga
-import eu.kanade.tachiyomi.data.library.LibraryUpdateService
-import eu.kanade.tachiyomi.data.preference.PreferenceValues
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.databinding.LibraryCategoryBinding
 import eu.kanade.tachiyomi.ui.category.CategoryAdapter
@@ -22,7 +20,6 @@ import eu.kanade.tachiyomi.ui.library.setting.SortDirectionSetting
 import eu.kanade.tachiyomi.ui.library.setting.SortModeSetting
 import eu.kanade.tachiyomi.ui.main.MainActivity
 import eu.kanade.tachiyomi.util.lang.plusAssign
-import eu.kanade.tachiyomi.util.system.toast
 import eu.kanade.tachiyomi.util.view.inflate
 import eu.kanade.tachiyomi.util.view.onAnimationsFinished
 import eu.kanade.tachiyomi.widget.AutofitRecyclerView
@@ -135,21 +132,22 @@ class LibraryCategoryView @JvmOverloads constructor(context: Context, attrs: Att
         binding.swipeRefresh.setDistanceToTriggerSync((2 * 64 * resources.displayMetrics.density).toInt())
         binding.swipeRefresh.refreshes()
             .onEach {
+                randomManga()
                 // SY -->
-                if (LibraryUpdateService.start(context, if (controller.presenter.groupType == LibraryGroup.BY_DEFAULT) category else null, group = controller.presenter.groupType, groupExtra = getGroupExtra())) {
-                    context.toast(
-                        when {
-                            controller.presenter.groupType == LibraryGroup.BY_DEFAULT ||
-                                (preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.ALL) -> R.string.updating_category
-                            (
-                                controller.presenter.groupType == LibraryGroup.UNGROUPED &&
-                                    preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.ALL_BUT_UNGROUPED
-                                ) ||
-                                preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.GLOBAL -> R.string.updating_library
-                            else -> R.string.updating_category
-                        },
-                    )
-                }
+//                if (LibraryUpdateService.start(context, if (controller.presenter.groupType == LibraryGroup.BY_DEFAULT) category else null, group = controller.presenter.groupType, groupExtra = getGroupExtra())) {
+//                    context.toast(
+//                        when {
+//                            controller.presenter.groupType == LibraryGroup.BY_DEFAULT ||
+//                                (preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.ALL) -> R.string.updating_category
+//                            (
+//                                controller.presenter.groupType == LibraryGroup.UNGROUPED &&
+//                                    preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.ALL_BUT_UNGROUPED
+//                                ) ||
+//                                preferences.groupLibraryUpdateType().get() == PreferenceValues.GroupLibraryMode.GLOBAL -> R.string.updating_library
+//                            else -> R.string.updating_category
+//                        },
+//                    )
+//                }
                 // SY <--
 
                 // It can be a very long operation, so we disable swipe refresh and show a toast.
@@ -292,6 +290,17 @@ class LibraryCategoryView @JvmOverloads constructor(context: Context, attrs: Att
                     (recycler.findViewHolderForItemId(manga.id!!) as? LibraryHolder<*>)?.toggleActivation()
                 }
             }
+        }
+    }
+
+    /**
+     * Opens a random manga from the current category.
+     */
+    private fun randomManga() {
+        val items = adapter.currentItems.filter { it is LibraryItem && it.manga.totalChapters != 0 }
+        if (items.isNotEmpty()) {
+            val item = items.random() as LibraryItem
+            controller.openManga(item.manga)
         }
     }
 
