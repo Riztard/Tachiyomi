@@ -143,7 +143,7 @@ class BrowseController :
             if (!router.hasRootController()) {
                 val controller: Controller = when (position) {
                     // SY -->
-                    SOURCES_CONTROLLER -> SourceController()
+                    SOURCES_CONTROLLER -> SourcesController()
                     FEED_CONTROLLER -> FeedController()
                     // SY <--
                     EXTENSIONS_CONTROLLER -> ExtensionsController()
