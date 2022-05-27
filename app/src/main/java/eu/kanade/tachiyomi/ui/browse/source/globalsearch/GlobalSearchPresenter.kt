@@ -184,8 +184,8 @@ open class GlobalSearchPresenter(
                     .sortedWith(
                         compareBy(
                             { it.source.id.toString() !in pinnedSourceIds },
-                            { "(${it.source.lang}) ${it.source.name.toLowerCase()}" }
-                        )
+                            { "(${it.source.lang}) ${it.source.name.toLowerCase()}" },
+                        ),
                     )
             }
             // Update current state
