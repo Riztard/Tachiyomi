@@ -26,7 +26,7 @@ enum class ReaderBottomButton(val value: String, @StringRes val stringRes: Int) 
             CropBordersContinuesVertical,
             CustomFilter,
             DataSaver,
-            PageLayout
+            PageLayout,
         ).map { it.value }.toSet()
     }
 }
