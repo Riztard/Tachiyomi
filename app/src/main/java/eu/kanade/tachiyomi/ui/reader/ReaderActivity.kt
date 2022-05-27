@@ -585,7 +585,7 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
                         eu.kanade.tachiyomi.R.string.on
                     } else {
                         eu.kanade.tachiyomi.R.string.off
-                    }
+                    },
                 )
             }
 
@@ -608,7 +608,7 @@ class ReaderActivity : BaseRxActivity<ReaderPresenter>() {
                         R.string.on
                     } else {
                         R.string.off
-                    }
+                    },
                 )
             }
         }
