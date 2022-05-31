@@ -96,7 +96,7 @@ class ChapterLoader(
      */
     private fun getPageLoader(chapter: ReaderChapter, goingToNextChapter: Boolean = false): PageLoader {
         val isDownloaded = downloadManager.isChapterDownloaded(chapter.chapter, manga, true)
-        val shouldDownload = preferences.steadyChapterDownload() && (!context.connectivityManager.isActiveNetworkMetered || !preferences.downloadOnlyOverWifi())
+        val shouldDownload = preferences.steadyChapterDownload() && manga.favorite && (!context.connectivityManager.isActiveNetworkMetered || !preferences.downloadOnlyOverWifi())
 
         return when {
             // SY -->
