@@ -74,7 +74,8 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
             binding.upperText.textAlignment = TEXT_ALIGNMENT_TEXT_START
             binding.upperText.text = buildSpannedString {
                 bold { append(context.getString(R.string.transition_finished)) }
-                append("\n${transition.from.chapter.name}")
+                if (isChapterDownloaded) append("\n${transition.from.chapter.name} " + context.getString(R.string.transition_next_downloaded))
+                else append("\n${transition.from.chapter.name}")
             }
             binding.lowerText.text = buildSpannedString {
                 bold { append(context.getString(R.string.transition_next)) }
