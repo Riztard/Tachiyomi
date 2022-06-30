@@ -103,7 +103,7 @@ fun Manga.shouldDownloadNewChapters(db: DatabaseHelper, prefs: PreferencesHelper
 fun Manga.getChaptersToDownload(
     newChapters: List<Chapter>,
     mangaChapters: List<ChapterItem>,
-    preferences: PreferencesHelper
+    preferences: PreferencesHelper,
 ): List<Chapter> {
     val skipWhenUnreadChapters = preferences.downloadNewSkipUnread().get()
     val downloadNewChaptersLimit = preferences.downloadNewChapters().get()
