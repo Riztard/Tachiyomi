@@ -36,6 +36,13 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
      */
     private fun bindPrevChapterTransition(transition: ChapterTransition) {
         val prevChapter = transition.to
+        var isChapterDownloaded = false
+
+        when (prevChapter?.pageLoader) {
+            is DownloadPageLoader -> {
+                isChapterDownloaded = (prevChapter.pageLoader as DownloadPageLoader).isChapterDownloaded(prevChapter.chapter)
+            }
+        }
 
         val hasPrevChapter = prevChapter != null
         binding.lowerText.isVisible = hasPrevChapter
@@ -47,7 +54,8 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
             }
             binding.lowerText.text = buildSpannedString {
                 bold { append(context.getString(R.string.transition_current)) }
-                append("\n${transition.from.chapter.name}")
+                if (isChapterDownloaded) append("\n${transition.from.chapter.name} " + context.getString(R.string.transition_next_downloaded))
+                else append("\n${transition.from.chapter.name}")
             }
         } else {
             binding.upperText.textAlignment = TEXT_ALIGNMENT_CENTER
