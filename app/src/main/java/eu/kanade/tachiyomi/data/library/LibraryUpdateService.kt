@@ -420,7 +420,7 @@ class LibraryUpdateService(
                                                         }.forEach { it.status = Download.State.DOWNLOADED }
 
                                                         val chaptersToDownload = mangaWithNotif.getChaptersToDownload(
-                                                            newChapters, chaptersDatabase, preferences
+                                                            newChapters, chaptersDatabase, preferences,
                                                         )
                                                         downloadChapters(mangaWithNotif, chaptersToDownload)
                                                         hasDownloads.set(true)
