@@ -109,6 +109,11 @@ class SettingsAppearanceController : SettingsController() {
                     summary = "%s"
                 }
             }
+        } else {
+            switchPreference {
+                bindTo(preferences.hideBottomBarOnScroll())
+                titleRes = R.string.pref_hide_bottom_bar_on_scroll
+            }
         }
 
         preferenceCategory {
