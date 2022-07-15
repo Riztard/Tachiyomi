@@ -99,7 +99,7 @@ abstract class HttpSource : CatalogueSource {
      * Headers builder for requests. Implementations can override this method for custom headers.
      */
     protected open fun headersBuilder() = Headers.Builder().apply {
-        add("User-Agent", DEFAULT_USER_AGENT)
+        add("User-Agent", network.defaultUserAgent)
     }
 
     /**
@@ -417,8 +417,4 @@ abstract class HttpSource : CatalogueSource {
         this.delegate = delegate
     }
     // EXH <--
-
-    companion object {
-        var DEFAULT_USER_AGENT = System.getProperty("http.agent")
-    }
 }
