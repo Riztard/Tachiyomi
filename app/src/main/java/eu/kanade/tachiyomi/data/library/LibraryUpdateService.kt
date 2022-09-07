@@ -345,6 +345,7 @@ class LibraryUpdateService(
         mangaToUpdate = listToUpdate
             .distinctBy { it.id }
             .sortedBy { it.last_update }
+            .reversed()
 
         // Warn when excessively checking a single source
         val maxUpdatesFromSource = mangaToUpdate
