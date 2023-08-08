@@ -7,7 +7,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
+import tachiyomi.domain.UnsortedPreferences
 import tachiyomi.presentation.core.components.Badge
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 
 @Composable
 internal fun DownloadsBadge(count: Long) {
@@ -20,10 +23,11 @@ internal fun DownloadsBadge(count: Long) {
     }
 }
 
+val unsortedPreferences = Injekt.get<UnsortedPreferences>()
 @Composable
 internal fun UnreadBadge(count: Long) {
     if (count > 0) {
-        Badge(text = "$count")
+        if ((unsortedPreferences.superSecretSetting().get() > 9).not()) Badge(text = "$count")
     }
 }
 
