@@ -350,7 +350,7 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                                         MANGA_NON_COMPLETED in restrictions && manga.status.toInt() == SManga.COMPLETED ->
                                             skippedUpdates.add(manga to context.getString(R.string.skipped_reason_completed))
 
-                                        MANGA_HAS_UNREAD in restrictions && libraryManga.unreadCount != 0L ->
+                                        MANGA_HAS_UNREAD in restrictions && libraryManga.unreadCount > 1 ->
                                             skippedUpdates.add(manga to context.getString(R.string.skipped_reason_not_caught_up))
 
                                         MANGA_NON_READ in restrictions && libraryManga.totalChapters > 0L && !libraryManga.hasStarted ->
