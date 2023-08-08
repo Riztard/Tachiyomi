@@ -10,10 +10,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -33,6 +35,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,6 +87,7 @@ import eu.kanade.tachiyomi.util.system.dpToPx
 import eu.kanade.tachiyomi.util.system.isBenchmarkBuildType
 import eu.kanade.tachiyomi.util.system.isNavigationBarNeedsScrim
 import eu.kanade.tachiyomi.util.system.isPreviewBuildType
+import eu.kanade.tachiyomi.util.system.toast
 import eu.kanade.tachiyomi.util.view.setComposeContent
 import exh.debug.DebugToggles
 import exh.eh.EHentaiUpdateWorker
@@ -94,6 +98,7 @@ import exh.source.EXH_SOURCE_ID
 import exh.source.ExhPreferences
 import exh.syDebugVersion
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
@@ -112,6 +117,8 @@ import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.util.collectAsState
 import uy.kohesive.injekt.injectLazy
 import java.util.LinkedList
+import kotlin.time.Duration.Companion.seconds
+import androidx.compose.ui.graphics.Color.Companion as ComposeColor
 
 class MainActivity : BaseActivity() {
 
@@ -211,6 +218,9 @@ class MainActivity : BaseActivity() {
                 screen = HomeScreen,
                 disposeBehavior = NavigatorDisposeBehavior(disposeNestedNavigators = false, disposeSteps = true),
             ) { navigator ->
+                if (navigator.size == 1) {
+                    ConfirmExit()
+                }
                 LaunchedEffect(navigator) {
                     this@MainActivity.navigator = navigator
 
@@ -351,6 +361,21 @@ class MainActivity : BaseActivity() {
         when (val screen = navigator?.lastItem) {
             is AssistContentScreen -> {
                 screen.onProvideAssistUrl()?.let { outContent.webUri = it.toUri() }
+            }
+        }
+    }
+
+    @Composable
+    private fun ConfirmExit() {
+        val scope = rememberCoroutineScope()
+        var waitingConfirmation by remember { mutableStateOf(false) }
+        BackHandler(enabled = !waitingConfirmation) {
+            scope.launch {
+                waitingConfirmation = true
+                val toast = toast("Confirm exit", Toast.LENGTH_LONG)
+                delay(2.seconds)
+                toast.cancel()
+                waitingConfirmation = false
             }
         }
     }
