@@ -53,6 +53,8 @@ class PreMigrationScreenModel(
      */
     private fun getEnabledSources(): List<MigrationSourceItem> {
         val languages = sourcePreferences.enabledLanguages().get()
+        val disabledSourceIds = sourcePreferences.disabledSources().get()
+        val pinnedSourceIds = sourcePreferences.pinnedSources().get()
         val sourcesSaved = prefs.migrationSources().get().split("/")
             .mapNotNull { it.toLongOrNull() }
         val disabledSources = sourcePreferences.disabledSources().get()
@@ -61,7 +63,9 @@ class PreMigrationScreenModel(
             .asSequence()
             .filterIsInstance<HttpSource>()
             .filter { it.lang in languages }
-            .sortedBy { "(${it.lang}) ${it.name}" }
+            // .sortedBy { "(${it.lang}) ${it.name}" }
+            .filterNot { it.id.toString() in disabledSourceIds }
+            .sortedWith(compareBy({ it.id.toString() !in pinnedSourceIds }, { "(${it.lang}) ${it.name}" }))
             .map {
                 MigrationSourceItem(
                     it,
