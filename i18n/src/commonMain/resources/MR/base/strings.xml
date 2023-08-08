@@ -268,6 +268,7 @@
     <string name="update_1hour">Every hour</string>
     <string name="update_3hour">Every 3 hours</string>
     <string name="update_6hour">Every 6 hours</string>
+    <string name="update_8hour">Every 8 hours</string>
     <string name="update_12hour">Every 12 hours</string>
     <string name="update_24hour">Daily</string>
     <string name="update_48hour">Every 2 days</string>
