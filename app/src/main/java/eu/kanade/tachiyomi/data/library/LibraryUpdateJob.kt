@@ -282,7 +282,7 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                         false
                     }
 
-                    MANGA_HAS_UNREAD in restrictions && it.unreadCount != 0L -> {
+                    MANGA_HAS_UNREAD in restrictions && it.unreadCount > 1 -> {
                         skippedUpdates.add(it.manga to context.getString(R.string.skipped_reason_not_caught_up))
                         false
                     }
