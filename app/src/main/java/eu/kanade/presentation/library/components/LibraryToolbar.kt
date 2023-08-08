@@ -3,6 +3,7 @@ package eu.kanade.presentation.library.components
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AutoMode
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.FlipToBack
 import androidx.compose.material.icons.outlined.SelectAll
@@ -119,8 +120,9 @@ private fun LibraryRegularToolbar(
                         title = stringResource(R.string.action_update_category),
                         onClick = onClickRefresh,
                     ),
-                    AppBar.OverflowAction(
+                    AppBar.Action(
                         title = stringResource(R.string.action_open_random_manga),
+                        icon = Icons.Outlined.AutoMode,
                         onClick = onClickOpenRandomManga,
                     ),
                     // SY -->
