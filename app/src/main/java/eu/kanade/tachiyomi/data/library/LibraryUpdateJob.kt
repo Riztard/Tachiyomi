@@ -310,7 +310,8 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                     else -> true
                 }
             }
-            .sortedBy { it.manga.title }
+            // .sortedBy { it.manga.title }
+            .sortedByDescending { it.manga.lastUpdate }
 
         notifier.showQueueSizeWarningNotificationIfNeeded(mangaToUpdate)
 
