@@ -291,10 +291,16 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                         skippedUpdates.add(it.manga to context.stringResource(MR.strings.skipped_reason_completed))
                         false
                     }
-
-                    MANGA_HAS_UNREAD in restrictions && it.unreadCount != 0L -> {
+                    MANGA_HAS_UNREAD in restrictions -> {
+                        val unreadChapterRoundedUniqueCount = getChaptersByMangaId.await(it.manga.id)
+                            .filter { it.read.not() }.map { it.chapterNumber.toInt() }.distinct().size
+                        val shouldCheckUpdate = when {
+                            unreadChapterRoundedUniqueCount > 1 -> false
+                            unreadChapterRoundedUniqueCount == 0 && it.unreadCount > 1 -> false
+                            else -> true
+                        }
                         skippedUpdates.add(it.manga to context.stringResource(MR.strings.skipped_reason_not_caught_up))
-                        false
+                        shouldCheckUpdate
                     }
 
                     MANGA_NON_READ in restrictions && it.totalChapters > 0L && !it.hasStarted -> {
