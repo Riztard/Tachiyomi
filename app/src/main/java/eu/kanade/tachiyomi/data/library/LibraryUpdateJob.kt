@@ -299,7 +299,8 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                     else -> true
                 }
             }
-            .sortedBy { it.manga.title }
+            // .sortedBy { it.manga.title }
+            .sortedByDescending { it.manga.lastUpdate }
 
         // Warn when excessively checking a single source
         val maxUpdatesFromSource = mangaToUpdate
