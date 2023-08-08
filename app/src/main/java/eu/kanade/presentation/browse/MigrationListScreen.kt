@@ -62,7 +62,7 @@ fun MigrationListScreen(
             val titleString = stringResource(SYMR.strings.migration)
             val title by produceState(initialValue = titleString, items, unfinishedCount, titleString) {
                 withIOContext {
-                    value = "$titleString ($unfinishedCount/${items.size})"
+                    value = "($unfinishedCount/${items.size}) $titleString "
                 }
             }
             AppBar(
