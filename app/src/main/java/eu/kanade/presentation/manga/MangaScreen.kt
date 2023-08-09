@@ -76,6 +76,7 @@ import eu.kanade.tachiyomi.source.online.english.Tsumino
 import eu.kanade.tachiyomi.ui.manga.ChapterItem
 import eu.kanade.tachiyomi.ui.manga.MangaScreenModel
 import eu.kanade.tachiyomi.ui.manga.PagePreviewState
+import eu.kanade.tachiyomi.util.chapter.getNextUnread
 import eu.kanade.tachiyomi.util.lang.toRelativeString
 import eu.kanade.tachiyomi.util.system.copyToClipboard
 import exh.metadata.MetadataUtil
@@ -421,7 +422,8 @@ private fun MangaScreenSmallImpl(
                         val isReading = remember(state.chapters) {
                             state.chapters.fastAny { it.chapter.read }
                         }
-                        Text(text = stringResource(if (isReading) R.string.action_resume else R.string.action_start))
+                        var chapterNumber = state.chapters.getNextUnread(state.manga)?.chapterNumber.toString().replace(".0", "")
+                        Text(text = stringResource(if (isReading) R.string.action_resume else R.string.action_start) + " Ch " + chapterNumber)
                     },
                     icon = { Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null) },
                     onClick = onContinueReading,
