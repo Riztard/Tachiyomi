@@ -132,7 +132,7 @@ private fun BoxScope.CoverTextOverlay(
                     1f to Color(0xAA000000),
                 ),
             )
-            .fillMaxHeight(0.33f)
+            .fillMaxHeight(0.4f)
             .fillMaxWidth()
             .align(Alignment.BottomCenter),
     )
@@ -271,9 +271,9 @@ private fun GridItemTitle(
         modifier = modifier,
         text = title,
         fontSize = 12.sp,
-        lineHeight = 18.sp,
+        lineHeight = 14.sp,
         minLines = minLines,
-        maxLines = maxLines,
+        maxLines = 3,
         overflow = TextOverflow.Ellipsis,
         style = style,
     )
