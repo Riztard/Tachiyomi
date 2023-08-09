@@ -48,8 +48,8 @@ internal fun LibraryCompactGrid(
                 coverBadgeStart = {
                     DownloadsBadge(count = libraryItem.downloadCount)
                     UnreadBadge(count = libraryItem.unreadCount)
-                },
-                coverBadgeEnd = {
+//                },
+//                coverBadgeEnd = {
                     LanguageBadge(
                         isLocal = libraryItem.isLocal,
                         sourceLanguage = libraryItem.sourceLanguage,

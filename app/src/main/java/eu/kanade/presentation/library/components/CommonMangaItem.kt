@@ -54,7 +54,7 @@ object CommonMangaItemDefaults {
 }
 
 private val ContinueReadingButtonSizeSmall = 28.dp
-private val ContinueReadingButtonSizeLarge = 32.dp
+private val ContinueReadingButtonSizeLarge = 30.dp
 
 private val ContinueReadingButtonIconSizeSmall = 16.dp
 private val ContinueReadingButtonIconSizeLarge = 20.dp
@@ -112,6 +112,16 @@ fun MangaCompactGridItem(
                             .align(Alignment.BottomEnd),
                     )
                 }
+                if (onClickContinueReading != null) {
+                    ContinueReadingButton(
+                        size = ContinueReadingButtonSizeLarge,
+                        iconSize = ContinueReadingButtonIconSizeLarge,
+                        onClick = onClickContinueReading,
+                        modifier = Modifier
+                            .padding(top = 3.dp, end = 4.dp)
+                            .align(Alignment.TopEnd),
+                    )
+                }
             },
         )
     }
@@ -156,17 +166,17 @@ private fun BoxScope.CoverTextOverlay(
             ),
             minLines = 1,
         )
-        if (onClickContinueReading != null) {
-            ContinueReadingButton(
-                size = ContinueReadingButtonSizeSmall,
-                iconSize = ContinueReadingButtonIconSizeSmall,
-                onClick = onClickContinueReading,
-                modifier = Modifier.padding(
-                    end = ContinueReadingButtonGridPadding,
-                    bottom = ContinueReadingButtonGridPadding,
-                ),
-            )
-        }
+//        if (onClickContinueReading != null) {
+//            ContinueReadingButton(
+//                size = ContinueReadingButtonSizeSmall,
+//                iconSize = ContinueReadingButtonIconSizeSmall,
+//                onClick = onClickContinueReading,
+//                modifier = Modifier.padding(
+//                    end = ContinueReadingButtonGridPadding,
+//                    bottom = ContinueReadingButtonGridPadding,
+//                ),
+//            )
+//        }
     }
 }
 
@@ -389,7 +399,7 @@ private fun ContinueReadingButton(
             onClick = onClick,
             shape = MaterialTheme.shapes.small,
             colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
+                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
                 contentColor = contentColorFor(MaterialTheme.colorScheme.primaryContainer),
             ),
             modifier = Modifier.size(size),
