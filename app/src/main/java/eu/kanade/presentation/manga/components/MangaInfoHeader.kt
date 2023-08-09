@@ -196,8 +196,8 @@ fun MangaActionRow(
             },
             icon = if (favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
             color = if (favorite) MaterialTheme.colorScheme.primary else defaultActionButtonColor,
-            onClick = onAddToLibraryClicked,
-            onLongClick = onEditCategory,
+            onClick = onEditCategory ?: onAddToLibraryClicked,
+            onLongClick = onAddToLibraryClicked,
         )
         MangaActionButton(
             title = when (nextUpdateDays) {
@@ -681,11 +681,11 @@ private fun RowScope.MangaActionButton(
     title: String,
     icon: ImageVector,
     color: Color,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
 ) {
     TextButton(
-        onClick = onClick,
+        onClick = onClick!!,
         modifier = Modifier.weight(1f),
         onLongClick = onLongClick,
     ) {
