@@ -261,9 +261,9 @@ private fun GridItemTitle(
         modifier = modifier,
         text = title,
         fontSize = 12.sp,
-        lineHeight = 18.sp,
+        lineHeight = 14.sp,
         minLines = minLines,
-        maxLines = maxLines,
+        maxLines = 3,
         overflow = TextOverflow.Ellipsis,
         style = style,
     )
