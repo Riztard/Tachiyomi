@@ -50,7 +50,7 @@ object CommonMangaItemDefaults {
     const val BrowseFavoriteCoverAlpha = 0.34f
 }
 
-private val ContinueReadingButtonSize = 28.dp
+private val ContinueReadingButtonSize = 30.dp
 private val ContinueReadingButtonGridPadding = 6.dp
 private val ContinueReadingButtonListSpacing = 8.dp
 
@@ -105,6 +105,15 @@ fun MangaCompactGridItem(
             },
         )
     }
+    if (onClickContinueReading != null) {
+        ContinueReadingButton(
+            modifier = Modifier.padding(
+                start = 92.dp,
+                top = 10.dp,
+            ),
+            onClickContinueReading = onClickContinueReading,
+        )
+    }
 }
 
 /**
@@ -146,15 +155,15 @@ private fun BoxScope.CoverTextOverlay(
             ),
             minLines = 1,
         )
-        if (onClickContinueReading != null) {
-            ContinueReadingButton(
-                modifier = Modifier.padding(
-                    end = ContinueReadingButtonGridPadding,
-                    bottom = ContinueReadingButtonGridPadding,
-                ),
-                onClickContinueReading = onClickContinueReading,
-            )
-        }
+//        if (onClickContinueReading != null) {
+//            ContinueReadingButton(
+//                modifier = Modifier.padding(
+//                    end = ContinueReadingButtonGridPadding,
+//                    bottom = ContinueReadingButtonGridPadding,
+//                ),
+//                onClickContinueReading = onClickContinueReading,
+//            )
+//        }
     }
 }
 
@@ -372,7 +381,7 @@ private fun ContinueReadingButton(
             modifier = Modifier.size(ContinueReadingButtonSize),
             shape = MaterialTheme.shapes.small,
             colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
+                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
                 contentColor = contentColorFor(MaterialTheme.colorScheme.primaryContainer),
             ),
         ) {
