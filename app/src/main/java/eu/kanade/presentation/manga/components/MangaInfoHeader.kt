@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brush
+import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.PersonOutline
@@ -617,7 +618,14 @@ private fun MangaAndSourceTitlesSmall(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                     )
-                    DotSeparatorText()
+                }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(
+                modifier = Modifier.secondaryItemAlpha(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
                     if (isStubSource) {
                         Icon(
                             imageVector = Icons.Filled.Warning,
@@ -627,7 +635,16 @@ private fun MangaAndSourceTitlesSmall(
                                 .size(16.dp),
                             tint = MaterialTheme.colorScheme.error,
                         )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Filled.Extension,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .size(16.dp),
+                        )
                     }
+
                     Text(
                         text = sourceName,
                         modifier = Modifier.clickableNoIndication {
