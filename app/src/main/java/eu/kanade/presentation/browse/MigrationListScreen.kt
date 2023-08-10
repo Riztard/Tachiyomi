@@ -105,6 +105,7 @@ fun MigrationListScreen(
                     MigrationItem(
                         modifier = Modifier
                             .padding(top = 8.dp)
+                            .padding(horizontal = 16.dp)
                             .weight(1f)
                             .align(Alignment.Top)
                             .fillMaxHeight(),
@@ -123,6 +124,7 @@ fun MigrationListScreen(
                     MigrationItemResult(
                         modifier = Modifier
                             .padding(top = 8.dp)
+                            .padding(horizontal = 16.dp)
                             .weight(1f)
                             .align(Alignment.Top)
                             .fillMaxHeight(),
