@@ -654,7 +654,7 @@ private fun MangaAndSourceTitlesSmall(
                             )
                         },
                         overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
+                        maxLines = 2,
                     )
                 }
             }
