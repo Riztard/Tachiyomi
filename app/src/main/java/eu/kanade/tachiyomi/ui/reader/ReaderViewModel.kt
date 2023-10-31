@@ -888,6 +888,11 @@ class ReaderViewModel @JvmOverloads constructor(
     fun getMangaOrientation(resolveDefault: Boolean = true): Int {
         val default = readerPreferences.defaultOrientationType().get()
         val orientation = ReaderOrientation.fromPreference(manga?.readerOrientation?.toInt())
+        if (orientation.toString().contains("landscape", true)) {
+            readerPreferences.webtoonSidePadding().set(20)
+        } else {
+            readerPreferences.webtoonSidePadding().set(0)
+        }
         return when {
             resolveDefault && orientation == ReaderOrientation.DEFAULT -> default
             else -> manga?.readerOrientation?.toInt() ?: default
