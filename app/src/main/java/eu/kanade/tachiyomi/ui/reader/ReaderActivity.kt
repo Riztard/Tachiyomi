@@ -876,6 +876,11 @@ class ReaderActivity : BaseActivity() {
         updateViewerInset(readerPreferences.fullscreen.get(), readerPreferences.drawUnderCutout.get())
         binding.viewerContainer.addView(newViewer.getView())
 
+        if (newViewer is WebtoonViewer) {
+            val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            readerPreferences.webtoonSidePadding.set(if (isLandscape) 20 else 0)
+        }
+
         // SY -->
         if (newViewer is PagerViewer) {
             if (readerPreferences.pageLayout.get() == PagerConfig.PageLayout.AUTOMATIC) {
