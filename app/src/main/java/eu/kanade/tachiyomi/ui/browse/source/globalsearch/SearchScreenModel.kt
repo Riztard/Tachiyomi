@@ -54,9 +54,10 @@ abstract class SearchScreenModel(
 
     open val sortComparator = { map: Map<Source, SearchItemResult> ->
         compareBy<Source>(
-            { (map[it] as? SearchItemResult.Success)?.isEmpty ?: true },
+//            { (map[it] as? SearchItemResult.Success)?.isEmpty ?: true },
             { "${it.id}" !in pinnedSources },
-            { "${it.name.lowercase()} (${it.lang})" },
+//            { "${it.name.lowercase()} (${it.lang})" },
+            { "(${it.lang}) ${it.name.lowercase()}" },
         )
     }
 
@@ -85,7 +86,8 @@ abstract class SearchScreenModel(
             .sortedWith(
                 compareBy(
                     { "${it.id}" !in pinnedSources },
-                    { "${it.name.lowercase()} (${it.lang})" },
+//                    { "${it.name.lowercase()} (${it.lang})" },
+                    { "(${it.lang}) ${it.name.lowercase()}" },
                 ),
             )
     }
