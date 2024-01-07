@@ -39,6 +39,7 @@ import eu.kanade.presentation.more.settings.Preference
 import eu.kanade.presentation.more.settings.screen.data.CreateBackupScreen
 import eu.kanade.presentation.more.settings.screen.data.RestoreBackupScreen
 import eu.kanade.presentation.more.settings.screen.data.StorageInfo
+import eu.kanade.presentation.more.settings.screen.data.SyncOptionsScreen
 import eu.kanade.presentation.more.settings.widget.BasePreferenceWidget
 import eu.kanade.presentation.more.settings.widget.PrefsHorizontalPadding
 import eu.kanade.presentation.util.relativeTimeSpanString
@@ -511,6 +512,7 @@ object SettingsDataScreen : SearchableSettings {
         return Preference.PreferenceGroup(
             title = stringResource(MR.strings.pref_sync_now_group_title),
             preferenceItems = persistentListOf(
+                getSyncOptionsPref(),
                 Preference.PreferenceItem.TextPreference(
                     title = stringResource(MR.strings.pref_sync_now),
                     subtitle = stringResource(MR.strings.pref_sync_now_subtitle),
@@ -519,6 +521,16 @@ object SettingsDataScreen : SearchableSettings {
                     },
                 ),
             ),
+        )
+    }
+
+    @Composable
+    private fun getSyncOptionsPref(): Preference.PreferenceItem.TextPreference {
+        val navigator = LocalNavigator.currentOrThrow
+        return Preference.PreferenceItem.TextPreference(
+            title = stringResource(MR.strings.pref_sync_options),
+            subtitle = stringResource(MR.strings.pref_sync_options_summ),
+            onClick = { navigator.push(SyncOptionsScreen()) },
         )
     }
 
