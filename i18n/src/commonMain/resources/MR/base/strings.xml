@@ -570,7 +570,13 @@
     <string name="error_deleting_google_drive_lock_file">Error Deleting Google Drive Lock File</string>
     <string name="pref_purge_confirmation_title">Purge confirmation</string>
     <string name="pref_purge_confirmation_message">Purging sync data will delete all your sync data from Google Drive. Are you sure you want to continue?</string>
-
+    <string name="pref_sync_options">Create sync triggers</string>
+    <string name="pref_sync_options_summ">Can be used to set sync triggers</string>
+    <string name="sync_on_chapter_read">Sync on Chapter Read</string>
+    <string name="sync_on_chapter_open">Sync on Every Chapter Page</string>
+    <string name="sync_on_app_start">Sync on App Start</string>
+    <string name="sync_on_app_resume">Sync on App Resume</string>
+    <string name="sync_on_library_update">Sync on Library Update</string>
 
       <!-- Advanced section -->
     <string name="label_network">Networking</string>
