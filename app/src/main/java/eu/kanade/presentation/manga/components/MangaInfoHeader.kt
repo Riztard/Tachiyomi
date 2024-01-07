@@ -588,7 +588,7 @@ private fun ColumnScope.MangaContentInfo(
                     )
                 },
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
+                maxLines = 2,
             )
         }
     }
