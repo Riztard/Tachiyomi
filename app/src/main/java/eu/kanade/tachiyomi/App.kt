@@ -206,7 +206,7 @@ class App : Application(), DefaultLifecycleObserver, ImageLoaderFactory {
 
         val syncPreferences: SyncPreferences by injectLazy()
         val syncFlags = syncPreferences.syncFlags().get()
-        if (syncPreferences.isSyncEnabled() && syncFlags and SyncPreferences.Flags.SYNC_ON_APP_RESUME == SyncPreferences.Flags.SYNC_ON_APP_RESUME) {
+        if (syncPreferences.isSyncEnabled() && syncFlags and SyncPreferences.Flags.SYNC_ON_APP_START == SyncPreferences.Flags.SYNC_ON_APP_START) {
             SyncDataJob.startNow(this@App)
         }
     }
