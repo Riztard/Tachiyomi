@@ -39,6 +39,7 @@ fun LibraryToolbar(
     onClickRefresh: () -> Unit,
     onClickGlobalUpdate: () -> Unit,
     onClickOpenRandomManga: () -> Unit,
+    onClickSyncNow: () -> Unit,
     // SY -->
     onClickSyncExh: (() -> Unit)?,
     // SY <--
@@ -61,6 +62,7 @@ fun LibraryToolbar(
         onClickRefresh = onClickRefresh,
         onClickGlobalUpdate = onClickGlobalUpdate,
         onClickOpenRandomManga = onClickOpenRandomManga,
+        onClickSyncNow = onClickSyncNow,
         // SY -->
         onClickSyncExh = onClickSyncExh,
         // SY <--
@@ -78,6 +80,7 @@ private fun LibraryRegularToolbar(
     onClickRefresh: () -> Unit,
     onClickGlobalUpdate: () -> Unit,
     onClickOpenRandomManga: () -> Unit,
+    onClickSyncNow: () -> Unit,
     // SY -->
     onClickSyncExh: (() -> Unit)?,
     // SY <--
@@ -127,6 +130,11 @@ private fun LibraryRegularToolbar(
                         icon = Icons.Outlined.AutoMode,
                         onClick = onClickOpenRandomManga,
                     ),
+                    AppBar.OverflowAction(
+                        title = stringResource(MR.strings.sync_library),
+                        onClick = onClickSyncNow,
+                    ),
+                ),
 
                 ).builder().apply {
                     // SY -->
