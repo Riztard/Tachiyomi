@@ -361,6 +361,7 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                 .filterNot { it.key in LIBRARY_UPDATE_EXCLUDED_SOURCES }
                 // SY <--
                 .values
+                .flatMap { it.chunked(10) }
                 .map { mangaInSource ->
                     async {
                         semaphore.withPermit {
