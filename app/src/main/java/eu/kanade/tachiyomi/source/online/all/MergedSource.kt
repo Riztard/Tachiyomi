@@ -120,7 +120,7 @@ class MergedSource : HttpSource() {
             "Manga references are empty, chapters unavailable, merge is likely corrupted"
         }
 
-        val semaphore = Semaphore(5)
+        val semaphore = Semaphore(10)
         var exception: Exception? = null
         return supervisorScope {
             mangaReferences
