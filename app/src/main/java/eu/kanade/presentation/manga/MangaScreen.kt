@@ -422,7 +422,10 @@ private fun MangaScreenSmallImpl(
                         val isReading = remember(state.chapters) {
                             state.chapters.fastAny { it.chapter.read }
                         }
-                        var chapterNumber = state.chapters.getNextUnread(state.manga)?.chapterNumber.toString().replace(".0", "")
+                        var chapterNumber = state.chapters.getNextUnread(state.manga)?.chapterNumber.toString()
+                            .replace(".0", "")
+                            .substringBefore("00000")
+                            .replace("9999", ".1x").substringBefore("x")
                         Text(
                             text = stringResource(if (isReading) MR.strings.action_resume else MR.strings.action_start) + " Ch " + chapterNumber
                         )
