@@ -380,7 +380,7 @@ class LibraryUpdateNotifier(
     }
 }
 
-private const val NOTIF_MAX_CHAPTERS = 5
+private const val NOTIF_MAX_CHAPTERS = 10
 private const val NOTIF_TITLE_MAX_LEN = 45
 private const val NOTIF_ICON_SIZE = 192
 private const val MANGA_PER_SOURCE_QUEUE_WARNING_THRESHOLD = 60
