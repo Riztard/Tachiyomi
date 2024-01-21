@@ -127,7 +127,7 @@ class MergedSource : HttpSource() {
             },
             downloadPreferences,
         )
-        val semaphore = Semaphore(5)
+        val semaphore = Semaphore(10)
         var exception: Exception? = null
         return supervisorScope {
             mangaReferences

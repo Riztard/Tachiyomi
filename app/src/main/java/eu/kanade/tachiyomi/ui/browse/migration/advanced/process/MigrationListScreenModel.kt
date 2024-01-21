@@ -176,7 +176,7 @@ class MigrationListScreenModel(
                             sources.filter { it.id != mangaSource.id }
                         }
                         if (useSourceWithMost) {
-                            val sourceSemaphore = Semaphore(3)
+                            val sourceSemaphore = Semaphore(6)
                             val processedSources = AtomicInteger()
 
                             validSources.map { source ->
