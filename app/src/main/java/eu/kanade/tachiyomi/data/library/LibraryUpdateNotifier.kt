@@ -93,11 +93,11 @@ class LibraryUpdateNotifier(
                 context.stringResource(
                     MR.strings.notification_updating_progress,
                     percentFormatter.format(current.toFloat() / total),
-                ),
+                ) + "($current/$total)",
             )
 
         if (!securityPreferences.hideNotificationContent().get()) {
-            val updatingText = manga.joinToString("\n") { it.title.chop(40) }
+            val updatingText = manga.joinToString("\n") { sourceManager.get(it.source)?.name!!.chop(12) + " | " + it.title.chop(37 - sourceManager.get(it.source)?.name!!.chop(12).length) }
             progressNotificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(updatingText))
         }
 
