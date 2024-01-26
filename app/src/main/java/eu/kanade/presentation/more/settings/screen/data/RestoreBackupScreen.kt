@@ -4,9 +4,14 @@ import android.content.Context
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +44,13 @@ import tachiyomi.presentation.core.components.SectionCard
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import androidx.compose.material3.Icon
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 
 class RestoreBackupScreen(
     private val uri: String,
@@ -98,6 +110,23 @@ class RestoreBackupScreen(
         }
     }
 
+    @Composable
+    private fun CopyToClipboardButton(text: String) {
+        val clipboardManager = LocalClipboardManager.current
+        var copiedToClipboard by remember { mutableStateOf(false) }
+        TextButton(
+            onClick = {
+                clipboardManager.setText(AnnotatedString(text))
+                copiedToClipboard = true
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text("Copy source list to clipboard")
+            Spacer(modifier = Modifier.width(MaterialTheme.padding.extraSmall))
+            Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
+        }
+    }
+
     private fun LazyListScope.errorMessageItem(
         error: Any?,
     ) {
@@ -107,6 +136,7 @@ class RestoreBackupScreen(
                     modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
                     verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
                 ) {
+                    var missingSources = ""
                     val msg = buildAnnotatedString {
                         when (error) {
                             is MissingRestoreComponents -> {
@@ -121,6 +151,7 @@ class RestoreBackupScreen(
                                         separator = "\n- ",
                                         prefix = "- ",
                                     )
+                                    missingSources = error.sources.joinToString(", ")
                                 }
                                 if (error.trackers.isNotEmpty()) {
                                     appendLine()
@@ -157,6 +188,9 @@ class RestoreBackupScreen(
 
                     SelectionContainer {
                         Text(text = msg)
+                    }
+                    if (missingSources.isNullOrEmpty().not()) {
+                        CopyToClipboardButton(missingSources)
                     }
                 }
             }
