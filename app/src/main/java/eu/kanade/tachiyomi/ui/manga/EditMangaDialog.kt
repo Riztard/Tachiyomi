@@ -181,26 +181,24 @@ private fun onViewCreated(manga: Manga, context: Context, binding: EditMangaDial
         binding.mangaGenresTags.setChips(manga.genre.orEmpty().dropBlank(), scope)
 
         binding.title.hint = context.stringResource(SYMR.strings.title_hint, manga.ogTitle)
-        if (manga.ogAuthor != null) {
-            binding.mangaAuthor.hint = context.stringResource(SYMR.strings.author_hint, manga.ogAuthor!!)
-        }
-        if (manga.ogArtist != null) {
-            binding.mangaArtist.hint = context.stringResource(SYMR.strings.artist_hint, manga.ogArtist!!)
-        }
-        if (manga.ogThumbnailUrl != null) {
-            binding.thumbnailUrl.hint =
-                context.stringResource(
-                    SYMR.strings.thumbnail_url_hint,
-                    manga.ogThumbnailUrl!!.chop(30) + "." + manga.ogThumbnailUrl!!.substringAfterLast(".").chop(6)
-                )
-        }
-        if (!manga.ogDescription.isNullOrBlank()) {
-            binding.mangaDescription.hint =
-                context.stringResource(
-                    SYMR.strings.description_hint,
-                    manga.ogDescription!!.replace("\n", " ").chop(20),
-                )
-        }
+        binding.mangaAuthor.hint = context.stringResource(SYMR.strings.author_hint, if (manga.ogAuthor != null) manga.ogAuthor!! else "")
+        binding.mangaArtist.hint = context.stringResource(SYMR.strings.artist_hint, if (manga.ogArtist != null) manga.ogArtist!! else "")
+        binding.thumbnailUrl.hint =
+            context.stringResource(
+                SYMR.strings.thumbnail_url_hint,
+                if (manga.ogThumbnailUrl != null) {
+                    manga.ogThumbnailUrl!!.chop(40) +
+                        if (manga.ogThumbnailUrl!!.length > 46) {
+                            "." + manga.ogThumbnailUrl!!.substringAfterLast(".").chop(6)
+                        } else ""
+                } else ""
+            )
+        binding.mangaDescription.hint =
+            context.stringResource(
+                SYMR.strings.description_hint,
+                if (!manga.ogDescription.isNullOrBlank()) manga.ogDescription!!.replace("\n", " ").chop(20)
+                else ""
+            )
     }
     binding.mangaGenresTags.clearFocus()
 
