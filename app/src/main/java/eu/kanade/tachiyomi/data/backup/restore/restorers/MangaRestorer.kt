@@ -120,7 +120,7 @@ class MangaRestorer(
             ogArtist = newer.artist,
             ogDescription = newer.description,
             ogGenre = newer.genre,
-            thumbnailUrl = newer.thumbnailUrl,
+            ogThumbnailUrl = newer.thumbnailUrl,
             ogStatus = newer.status,
             // SY <--
             initialized = this.initialized || newer.initialized,
@@ -505,6 +505,7 @@ class MangaRestorer(
         if (customTitle != null ||
             customArtist != null ||
             customAuthor != null ||
+            customThumbnailUrl != null ||
             customDescription != null ||
             customGenre != null ||
             customStatus != 0
@@ -514,6 +515,7 @@ class MangaRestorer(
                 title = customTitle,
                 author = customAuthor,
                 artist = customArtist,
+                thumbnailUrl = customThumbnailUrl,
                 description = customDescription,
                 genre = customGenre,
                 status = customStatus.takeUnless { it == 0 }?.toLong(),
