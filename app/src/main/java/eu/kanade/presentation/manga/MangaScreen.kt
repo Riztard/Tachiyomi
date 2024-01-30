@@ -422,8 +422,8 @@ private fun MangaScreenSmallImpl(
                         val isReading = remember(state.chapters) {
                             state.chapters.fastAny { it.chapter.read }
                         }
-                        var chapterNumber = state.chapters.getNextUnread(state.manga)?.chapterNumber!!.toFloat().toString()
-                            .replace(".0", "")
+                        val chapterNumber = state.chapters.getNextUnread(state.manga)?.chapterNumber?.toFloat()?.toString()
+                            ?.replace(".0", "") ?: ""
 //                            .substringBefore("00000")
 //                            .replace("9999", ".1x").substringBefore("x")
                         Text(
