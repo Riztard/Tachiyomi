@@ -403,7 +403,8 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                                             .sortedByDescending { it.sourceOrder }.run {
                                                 if (libraryPreferences.libraryReadDuplicateChapters().get()) {
                                                     val readChapters = getChaptersByMangaId.await(manga.id).filter { it.read }
-                                                    val newReadChapters = this.filter { chapter -> readChapters.any { it.chapterNumber == chapter.chapterNumber } }
+                                                    val newReadChapters = this.filter { chapter -> readChapters
+                                                        .any { it.chapterNumber == chapter.chapterNumber && (it.chapterNumber >= 0) } }
                                                         .also { setReadStatus.await(true, *it.toTypedArray()) }
 
                                                     this.filterNot { newReadChapters.contains(it) }
