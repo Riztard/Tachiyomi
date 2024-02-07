@@ -18,7 +18,8 @@ if (gradle.startParameter.taskRequests.toString().contains("Standard")) {
 
 // shortcutHelper.setFilePath("./shortcuts.xml")
 
-val SUPPORTED_ABIS = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+//val SUPPORTED_ABIS = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+val SUPPORTED_ABIS = setOf("arm64-v8a")
 
 android {
     namespace = "eu.kanade.tachiyomi"
