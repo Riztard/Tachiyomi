@@ -296,7 +296,8 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
                         false
                     }
 
-                    MANGA_HAS_UNREAD in restrictions && it.unreadCount > 1 -> {
+                    MANGA_HAS_UNREAD in restrictions && /* it.unreadCount > 1 && */ getChaptersByMangaId.await(it.manga.id)
+                        .filter { !it.read }.map { it.chapterNumber.toInt() }.distinct().size > 1 -> {
                         skippedUpdates.add(it.manga to context.stringResource(MR.strings.skipped_reason_not_caught_up))
                         false
                     }
