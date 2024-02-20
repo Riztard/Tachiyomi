@@ -29,7 +29,7 @@ android {
     namespace = "eu.kanade.tachiyomi"
 
     defaultConfig {
-        applicationId = "eu.kanade.tachiyomi.sy"
+        applicationId = "eu.kanade.tachiyomi.sy.riz"
 
         versionCode = 81
         versionName = "1.13.2"
@@ -46,11 +46,12 @@ android {
 
     buildTypes {
         named("debug") {
-            versionNameSuffix = "-${getLatestCommitCount()}"
+            versionNameSuffix = "-${getLatestCommitCount()}-riz"
             applicationIdSuffix = ".debug"
             isPseudoLocalesEnabled = true
         }
         named("release") {
+            versionNameSuffix = "-riz"
             isMinifyEnabled = true
             isShrinkResources = true
             isProfileable = true
