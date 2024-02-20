@@ -685,6 +685,7 @@ object SettingsAdvancedScreen : SearchableSettings {
                         }
                         true
                     },
+                    enabled = false
                 ),
                 Preference.PreferenceItem.SwitchPreference(
                     pref = delegateSourcePreferences.delegateSources(),
