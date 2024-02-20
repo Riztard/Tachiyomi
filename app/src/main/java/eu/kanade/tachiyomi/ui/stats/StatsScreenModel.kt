@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import tachiyomi.domain.chapter.interactor.GetChaptersByMangaId
 import tachiyomi.domain.history.interactor.GetTotalReadDuration
 import tachiyomi.domain.library.model.LibraryManga
 import tachiyomi.domain.library.service.LibraryPreferences
@@ -40,6 +41,7 @@ class StatsScreenModel(
     private val trackerManager: TrackerManager = Injekt.get(),
     // SY -->
     private val getReadMangaNotInLibrary: GetReadMangaNotInLibrary = Injekt.get(),
+    private val getChaptersByMangaId: GetChaptersByMangaId = Injekt.get()
     // SY <--
 ) : StateScreenModel<StatsScreenState>(StatsScreenState.Loading) {
 
@@ -107,7 +109,7 @@ class StatsScreenModel(
         // SY <--
     }
 
-    private fun getGlobalUpdateItemCount(libraryManga: List<LibraryManga>): Int {
+    private suspend fun getGlobalUpdateItemCount(libraryManga: List<LibraryManga>): Int {
         val includedCategories = preferences.updateCategories().get().map { it.toLong() }
         val includedManga = if (includedCategories.isNotEmpty()) {
             libraryManga.filter { it.category in includedCategories }
@@ -130,7 +132,8 @@ class StatsScreenModel(
             .fastDistinctBy { it.manga.id }
             .fastCountNot {
                 (MANGA_NON_COMPLETED in updateRestrictions && it.manga.status.toInt() == SManga.COMPLETED) ||
-                    (MANGA_HAS_UNREAD in updateRestrictions && it.unreadCount != 0L) ||
+                    (MANGA_HAS_UNREAD in updateRestrictions && getChaptersByMangaId.await(it.manga.id)
+                        .filter { it.read.not() }.map { it.chapterNumber.toInt() }.distinct().size > 1) ||
                     (MANGA_NON_READ in updateRestrictions && it.totalChapters > 0 && !it.hasStarted)
             }
     }
