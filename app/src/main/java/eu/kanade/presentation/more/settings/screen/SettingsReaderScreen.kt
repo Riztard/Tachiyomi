@@ -142,7 +142,7 @@ object SettingsReaderScreen : SearchableSettings {
                     pref = fullscreenPref,
                     title = stringResource(MR.strings.pref_fullscreen),
                 ),
-                Preference.PreferenceItem.SwitchPreference(
+                Preference.PreferenceItem.SwitchPreference( 
                     pref = readerPreferences.cutoutShort(),
                     title = stringResource(MR.strings.pref_cutout_short),
                     enabled = fullscreen &&
