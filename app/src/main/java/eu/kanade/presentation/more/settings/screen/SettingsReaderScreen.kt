@@ -138,7 +138,7 @@ object SettingsReaderScreen : SearchableSettings {
                         3 to stringResource(MR.strings.automatic_background),
                     ),
                 ),
-                Preference.PreferenceItem.SwitchPreference( 
+                Preference.PreferenceItem.SwitchPreference(
                     pref = fullscreenPref,
                     title = stringResource(MR.strings.pref_fullscreen),
                 ),
