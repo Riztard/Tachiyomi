@@ -23,7 +23,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          RELEASE_BRANCHES: SYRizV3.7
+          RELEASE_BRANCHES: master
           DEFAULT_BUMP: patch
 
       - name: PING - Dispatch initiating repository event
