@@ -24,7 +24,7 @@ android {
     namespace = "eu.kanade.tachiyomi"
 
     defaultConfig {
-        applicationId = "eu.kanade.tachiyomi.sy.riz"
+        applicationId = "eu.kanade.tachiyomi.sy.riztard"
 
         versionCode = 64
         versionName = "1.10.4"
