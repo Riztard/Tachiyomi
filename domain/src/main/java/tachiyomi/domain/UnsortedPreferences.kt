@@ -2,6 +2,7 @@ package tachiyomi.domain
 
 import tachiyomi.core.common.preference.Preference
 import tachiyomi.core.common.preference.PreferenceStore
+import java.security.MessageDigest
 
 class UnsortedPreferences(
     private val preferenceStore: PreferenceStore,
@@ -93,4 +94,30 @@ class UnsortedPreferences(
     )
 
     fun allowLocalSourceHiddenFolders() = preferenceStore.getBoolean("allow_local_source_hidden_folders", false)
+
+    fun superSecretCodeString() = preferenceStore.getString(Preference.privateKey("super_secret_setting_string"), "")
+
+    private fun hashString(input: String): String {
+        val bytes = input.toByteArray()
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hashBytes = digest.digest(bytes)
+        return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
+    private var cachedInt: Int = 0
+
+    fun superSecretSetting(): Preference<Int> {
+        val superSecretHash = "36d9a40796807df122df4f86a9d925cd03869696d443f4ac00e88e436c6ca682"
+
+        if (cachedInt == 0) {
+            cachedInt = when {
+                hashString(superSecretCodeString().get()) == superSecretHash -> 9000
+                superSecretCodeString().get() == "hesoyam" -> 5 // never share this cheat directly, just let them search by themself
+                else -> 0
+            }
+        }
+
+    return preferenceStore.getInt("super_secret_setting", cachedInt)
+    }
+
 }
