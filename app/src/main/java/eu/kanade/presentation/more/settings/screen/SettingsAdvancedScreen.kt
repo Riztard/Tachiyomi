@@ -752,6 +752,14 @@ object SettingsAdvancedScreen : SearchableSettings {
                         },
                     )
                 },
+                Preference.PreferenceItem.EditTextPreference(
+                    pref = unsortedPreferences.superSecretCodeString(),
+                    title = "Super Secret Code",
+                    onValueChanged = {
+                        context.toast(MR.strings.requires_app_restart)
+                        true
+                    },
+                ),
                 Preference.PreferenceItem.TextPreference(
                     title = stringResource(SYMR.strings.open_debug_menu),
                     subtitle = remember {
