@@ -8,7 +8,7 @@ on:
 jobs:
   trigger_preview_build:
     name: Trigger preview build
-    if: ${{ github.ref == 'refs/heads/SYRizV3' }}
+    if: ${{ startsWith(github.ref, 'refs/heads/SYRizV3') }}
     runs-on: ubuntu-latest
 
     steps:
