@@ -3,12 +3,12 @@ name: Remote Dispatch Action Initiator
 on:
   push:
     branches:
-      - 'master'
+      - 'SYRizV3*'
 
 jobs:
   trigger_preview_build:
     name: Trigger preview build
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ startsWith(github.ref, 'refs/heads/SYRizV3') }}
     runs-on: ubuntu-latest
 
     steps:
