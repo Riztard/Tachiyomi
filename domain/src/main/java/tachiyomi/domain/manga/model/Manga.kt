@@ -106,7 +106,7 @@ data class Manga(
     }
 
     companion object {
-        // Generic filter that does not filter anything
+        // Generic filter that does not filter anything 
         const val SHOW_ALL = 0x00000000L
 
         const val CHAPTER_SORT_DESC = 0x00000000L
