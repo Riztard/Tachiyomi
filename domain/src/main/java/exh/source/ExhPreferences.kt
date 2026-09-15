@@ -8,7 +8,7 @@ class ExhPreferences(
 ) {
 
     // SY -->
-    val isHentaiEnabled: Preference<Boolean> = preferenceStore.getBoolean("eh_is_hentai_enabled", true)
+    val isHentaiEnabled: Preference<Boolean> = preferenceStore.getBoolean("eh_is_hentai_enabled", false)
 
     val enableExhentai: Preference<Boolean> = preferenceStore.getBoolean(Preference.Companion.privateKey("enable_exhentai"), false)
 
