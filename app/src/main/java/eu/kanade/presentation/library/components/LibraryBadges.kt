@@ -23,7 +23,8 @@ internal fun DownloadsBadge(count: Int) {
 @Composable
 internal fun UnreadBadge(count: Long) {
     if (count > 0) {
-        Badge(text = "$count")
+        Badge(text = "✦")
+//        Badge(text = "$count")
     }
 }
 
