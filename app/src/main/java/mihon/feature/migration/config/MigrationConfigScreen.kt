@@ -312,11 +312,12 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
         private val sourceManager: SourceManager = Injekt.get(),
     ) : StateScreenModel<ScreenModel.State>(State()) {
 
-        private val sourcesComparator = { includedSources: List<Long> ->
+        private val sourcesComparator = { includedSources: List<Long>, pinnedSources: List<Long> ->
             compareBy<MigrationSource>(
                 { !it.isSelected },
                 { includedSources.indexOf(it.id) },
-                { with(it) { "$name ($shortLanguage)" } },
+                { it.id !in pinnedSources },
+                { "(${it.source.lang}) ${it.name}" },
             )
         }
 
@@ -331,7 +332,8 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
             mutableState.update { state ->
                 val updatedSources = action(state.sources)
                 val includedSources = updatedSources.mapNotNull { if (!it.isSelected) null else it.id }
-                state.copy(sources = updatedSources.sortedWith(sourcesComparator(includedSources)))
+                val pinnedSources = sourcePreferences.pinnedSources.get().mapNotNull { it.toLongOrNull() }
+                state.copy(sources = updatedSources.sortedWith(sourcesComparator(includedSources, pinnedSources)))
             }
             saveSources()
         }
@@ -347,6 +349,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                 .filterIsInstance<HttpSource>()
                 .filterNot { it.id == MERGED_SOURCE_ID }
                 .filter { it.lang in languages }
+                .filterNot { it.id in disabledSources }
                 .map {
                     val source = Source(
                         id = it.id,
@@ -367,7 +370,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                 .toList()
 
             mutableState.update { state ->
-                state.copy(sources = sources.sortedWith(sourcesComparator(includedSources)))
+                state.copy(sources = sources.sortedWith(sourcesComparator(includedSources, pinnedSources)))
             }
         }
 
