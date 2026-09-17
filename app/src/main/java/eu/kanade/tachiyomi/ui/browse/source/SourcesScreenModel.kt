@@ -120,9 +120,14 @@ class SourcesScreenModel(
                                 it.key.removePrefix(CATEGORY_KEY_PREFIX),
                                 it.value.firstOrNull()?.category != null,
                             ),
-                            *it.value.map { source ->
-                                SourceUiModel.Item(source)
-                            }.toTypedArray(),
+                            *it.value
+                                .sortedWith(
+                                    compareBy(String.CASE_INSENSITIVE_ORDER, Source::lang)
+                                        .thenBy(String.CASE_INSENSITIVE_ORDER, Source::name),
+                                )
+                                .map { source ->
+                                    SourceUiModel.Item(source)
+                                }.toTypedArray(),
                         )
                     },
                 // SY -->
