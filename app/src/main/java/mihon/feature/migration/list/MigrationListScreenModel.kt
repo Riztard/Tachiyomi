@@ -119,62 +119,75 @@ class MigrationListScreenModel(
         val sources = preferences.migrationSources.get()
             .mapNotNull { sourceManager.get(it) }
 
-        for (manga in mangas) {
+        for (batch in mangas.chunked(5)) {
             if (!currentCoroutineContext().isActive) break
-            if (manga.manga.id !in state.value.mangaIds) continue
-            if (manga.searchResult.value != SearchResult.Searching) continue
-            if (!manga.migrationScope.isActive) continue
 
-            val result = try {
-                manga.migrationScope.async {
-                    if (prioritizeByChapters) {
-                        val sourceSemaphore = Semaphore(5)
-                        sources.map { source ->
-                            async innerAsync@{
-                                sourceSemaphore.withPermit {
-                                    val result = searchSource(manga.manga, source, deepSearchMode)
-                                    if (result == null || result.second.chapterCount == 0) return@innerAsync null
-                                    result
+            batch.filter { manga ->
+                manga.manga.id in state.value.mangaIds &&
+                    manga.searchResult.value == SearchResult.Searching &&
+                    manga.migrationScope.isActive
+            }.map { manga ->
+                manga to manga.migrationScope.async {
+                    try {
+                        if (prioritizeByChapters) {
+                            val sourceSemaphore = Semaphore(5)
+                            sources.map { source ->
+                                async innerAsync@{
+                                    sourceSemaphore.withPermit {
+                                        val result = searchSource(manga.manga, source, deepSearchMode)
+                                        if (result == null || result.second.chapterCount == 0) return@innerAsync null
+                                        result
+                                    }
                                 }
                             }
+                                .mapNotNull { it.await() }
+                                .maxByOrNull { it.second.latestChapter ?: 0.0 }
+                        } else {
+                            sources.forEach { source ->
+                                val result = searchSource(manga.manga, source, deepSearchMode)
+                                if (result != null) return@async result
+                            }
+                            null
                         }
-                            .mapNotNull { it.await() }
-                            .maxByOrNull { it.second.latestChapter ?: 0.0 }
-                    } else {
-                        sources.forEach { source ->
-                            val result = searchSource(manga.manga, source, deepSearchMode)
-                            if (result != null) return@async result
-                        }
+                    } catch (_: CancellationException) {
                         null
                     }
                 }
-                    .await()
-            } catch (_: CancellationException) {
-                continue
-            }
+            }.forEach { (manga, deferred) ->
+                if (!currentCoroutineContext().isActive) return@forEach
+                if (manga.manga.id !in state.value.mangaIds) return@forEach
+                if (manga.searchResult.value != SearchResult.Searching) return@forEach
+                if (!manga.migrationScope.isActive) return@forEach
 
-            if (result != null && result.first.thumbnailUrl == null) {
-                try {
-                    updateMangaFromRemote(result.first, fetchDetails = true, manualFetch = true).getOrThrow().manga
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (_: Exception) {
+                val result = try {
+                    deferred.await()
+                } catch (_: CancellationException) {
+                    null
                 }
-            }
 
-            manga.searchResult.value = result?.first?.toSuccessSearchResult() ?: SearchResult.NotFound
+                if (result != null && result.first.thumbnailUrl == null) {
+                    try {
+                        updateMangaFromRemote(result.first, fetchDetails = true, manualFetch = true).getOrThrow().manga
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (_: Exception) {
+                    }
+                }
 
-            if (result == null && hideUnmatched) {
-                removeManga(manga)
-            }
-            if (result != null &&
-                hideWithoutUpdates &&
-                (result.second.latestChapter ?: 0.0) <= (manga.latestChapter ?: 0.0)
-            ) {
-                removeManga(manga)
-            }
+                manga.searchResult.value = result?.first?.toSuccessSearchResult() ?: SearchResult.NotFound
 
-            updateMigrationProgress()
+                if (result == null && hideUnmatched) {
+                    removeManga(manga)
+                }
+                if (result != null &&
+                    hideWithoutUpdates &&
+                    (result.second.latestChapter ?: 0.0) <= (manga.latestChapter ?: 0.0)
+                ) {
+                    removeManga(manga)
+                }
+
+                updateMigrationProgress()
+            }
         }
     }
 
